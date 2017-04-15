@@ -1,0 +1,66 @@
+<template>
+  <!-- root node required -->
+  <div>
+    <!-- your content -->
+    <div class="layout-padding bg-grey-14 fit">
+      <div class="row auto items-center">
+      <div class="width-1of3"></div>
+        <div class="card shadow-5 bg-white ">
+          <div class="card-title bg-secondary text-white">
+            Please Login
+          </div>
+          <div class="layout-padding">
+
+            <!--  User required data for login  -->
+            <div class="floating-label">
+              <input required class="bg-white full-width" v-model="email" type="email">
+              <label>Email</label>
+            </div>
+
+            <div class="floating-label">
+              <input required class="bg-white full-width" v-model="password" type="password">
+              <label>Email</label>
+            </div>
+
+            <button class="secondary push" @click="login">Login</button>
+          </div>
+        </div>
+      <div class="width-1of3"></div>
+    </div>
+    </div>
+  </div>
+</template>
+<script>
+  import axios from 'axios'
+  export default {
+    data () {
+      return {
+        email: 'aaroncastells@iesmontsia.org',
+        password: 'aron200289'
+      }
+    },
+    methods: {
+      login: function () {
+        let data = {
+          client_id: 2,
+          client_secret: 'I5TfuXCXf2OP72B1tupts30bM5yR6fN1OtLzALuW',
+          grant_type: 'password',
+          username: this.email,
+          password: this.password
+        }
+        axios.post('http://auctionator.local/oauth/token', data).then((response) => {
+          this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now())
+          location.reload()
+        })
+      },
+      computed: {
+        isAuth () {
+          return this.$auth.isAuthenticated()
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+</style>
