@@ -62,10 +62,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -143,8 +139,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
-    staticClass: "layout-padding fit bg-grey-14"
-  }, [_c('div', {
     staticClass: "row auto large-gutter"
   }, _vm._l((_vm.auctions), function(i) {
     return (i.closed != 1 && _vm.calculateTime(i.enddate, i.id) >= 0) ? _c('div', {
@@ -177,7 +171,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("\n              Ends in:\n            ")]), _vm._v(" "), _c('div', [_vm._v("\n              " + _vm._s(_vm.msToTime(_vm.calculateTime(i.enddate, i.id))) + "\n            ")]), _vm._v(" "), _c('div', {
       staticClass: "auto"
     }), _vm._v(" "), _vm._m(0, true)])])]) : _vm._e()
-  }))]), _vm._v(" "), _c('div')])
+  }))])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "primary clear small"

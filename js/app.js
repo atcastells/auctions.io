@@ -171,6 +171,18 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODU
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_4_auth__["a" /* default */]);
 
 __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */].beforeEach((to, from, next) => {
+  console.log(to);
+  if (to.path === '/') {
+    if (__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].auth.isAuthenticated()) {
+      next({
+        path: '/home'
+      });
+    } else {
+      next({
+        path: '/login'
+      });
+    }
+  }
   if (to.matched.some(record => record.meta.guest)) {
     if (__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].auth.isAuthenticated()) {
       next({

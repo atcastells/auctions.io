@@ -92,6 +92,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -172,7 +175,9 @@ var update = __webpack_require__(165)("d9e7e856", content, true);
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('q-layout', [_c('div', {
+  return _c('q-layout', {
+    staticClass: "bg-grey-14"
+  }, [_c('div', {
     staticClass: "toolbar",
     slot: "header"
   }, [_c('div', {
@@ -245,10 +250,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('div', {
     staticClass: "text-grey-6"
   }, [_vm._v("\n        23 minutes ago.\n      ")])])], 2) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "layout-padding  fit"
+  }, [_c('router-view', {
+    staticClass: "layout-view"
+  })], 1), _vm._v(" "), _c('div', {
     staticClass: "toolbar",
     slot: "footer"
-  }), _vm._v(" "), _c('router-view', {
-    staticClass: "layout-view"
   })], 1)
 },staticRenderFns: []}
 

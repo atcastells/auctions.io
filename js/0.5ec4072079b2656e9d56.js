@@ -60,8 +60,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -129,8 +127,6 @@ var update = __webpack_require__(165)("0a9cec92", content, true);
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
-    staticClass: "layout-padding bg-grey-14 fit"
-  }, [_c('div', {
     staticClass: "row auto items-center"
   }, [_c('div', {
     staticClass: "width-1of3"
@@ -193,7 +189,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Login")])])]), _vm._v(" "), _c('div', {
     staticClass: "width-1of3"
-  })])])])
+  })])])
 },staticRenderFns: []}
 
 /***/ })
