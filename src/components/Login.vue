@@ -2,7 +2,6 @@
   <!-- root node required -->
   <div>
     <!-- your content -->
-    <div class="layout-padding bg-grey-14 fit">
       <div class="row auto items-center">
       <div class="width-1of3"></div>
         <div class="card shadow-5 bg-white ">
@@ -28,7 +27,6 @@
       <div class="width-1of3"></div>
     </div>
     </div>
-  </div>
 </template>
 <script>
   import axios from 'axios'

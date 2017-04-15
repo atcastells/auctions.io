@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout class="bg-grey-14">
     <div slot="header" class="toolbar">
       <div class="toolbar-content">
       <button class="hide-on-drawer-visible" @click="$refs.drawer.toggle()">
@@ -52,9 +52,12 @@
       </div>
     </q-modal>
 
-    <div slot="footer" class="toolbar"></div>
-    <router-view class="layout-view"></router-view>
 
+    <div class="layout-padding  fit">
+    <router-view class="layout-view"></router-view>
+    </div>
+
+    <div slot="footer" class="toolbar"></div>
   </q-layout>
 </template>
 

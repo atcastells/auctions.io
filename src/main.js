@@ -18,6 +18,19 @@ Vue.use(auth)
 
 router.beforeEach(
   (to, from, next) => {
+    console.log(to)
+    if (to.path === '/') {
+      if (Vue.auth.isAuthenticated()) {
+        next({
+          path: '/home'
+        })
+      }
+      else {
+        next({
+          path: '/login'
+        })
+      }
+    }
     if (to.matched.some(record => record.meta.guest)) {
       if (Vue.auth.isAuthenticated()) {
         next({

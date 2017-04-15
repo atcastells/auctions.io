@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div class="layout-padding fit bg-grey-14">
       <div class="row auto large-gutter">
         <!--  Auction card (loop)  -->
         <div class="width-1of3"  v-if="i.closed != 1 && calculateTime(i.enddate,i.id) >= 0" v-for="i in auctions" :key="i.id">
@@ -33,9 +32,6 @@
       </div>
 
     </div>
-    <div>
-    </div>
-  </div>
 </template>
 
 <script>
