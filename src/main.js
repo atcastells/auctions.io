@@ -12,13 +12,17 @@ import router from './router'
 import axios from 'axios'
 import auth from 'auth'
 
+axios.defaults.headers.common = {
+  'X-Requested-With': 'XMLHttpRequest',
+  'Accept': 'application/json'
+}
+
 Vue.use(Quasar) // Install Quasar Framework
 Vue.use(axios)
 Vue.use(auth)
 
 router.beforeEach(
   (to, from, next) => {
-    console.log(to)
     if (to.path === '/') {
       if (Vue.auth.isAuthenticated()) {
         next({

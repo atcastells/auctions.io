@@ -5,8 +5,8 @@ webpackJsonp([6],{
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = (function (Vue) {
+  let authenticatedUser = null;
   Vue.auth = {
-
     setToken(token, expiration) {
       localStorage.setItem('token', token);
       localStorage.setItem('expiration', expiration);
@@ -37,7 +37,16 @@ webpackJsonp([6],{
       } else {
         return false;
       }
+    },
+
+    setAuthenticatedUser(data) {
+      authenticatedUser = data;
+    },
+
+    getAuthtenticatedUser() {
+      return authenticatedUser;
     }
+
   };
 
   Object.defineProperties(Vue.prototype, {
@@ -166,12 +175,16 @@ __webpack_require__(129);
 
 
 
+__WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common = {
+  'X-Requested-With': 'XMLHttpRequest',
+  'Accept': 'application/json'
+};
+
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_1_quasar___default.a); // Install Quasar Framework
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_3_axios___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_4_auth__["a" /* default */]);
 
 __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */].beforeEach((to, from, next) => {
-  console.log(to);
   if (to.path === '/') {
     if (__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].auth.isAuthenticated()) {
       next({

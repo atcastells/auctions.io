@@ -10,7 +10,7 @@
       </q-toolbar-title>
       </div>
       <button v-if="isAuth" @click="$refs.userModal.open()">
-        <i>account_circle</i>
+       Welcome {{email}} <i>account_circle</i>
       </button>
     </div>
 
@@ -32,8 +32,10 @@
       <!--</div>-->
     <!--</q-drawer>-->
     <q-modal v-if="isAuth" ref="userModal" :content-css="{padding: '10px 40px 5px 40px', minWidth: '50vw'}">
-      <h4>Hello username</h4>
-      <p v-for="n in 10">User params</p>
+      <h4>Hello {{userName}}</h4>
+
+
+
       <div class="card-actions">
         <div class="text-primary">
           <button class="primary" @click="$refs.userModal.close()">Close</button>
@@ -67,8 +69,11 @@
   export default {
     data () {
       return {
+        userName: '',
         email: '',
-        password: ''
+        coins: '',
+        password: '',
+        avatarUrl: ''
       }
     },
     methods: {
@@ -76,17 +81,17 @@
         this.$auth.destroyToken()
         location.reload()
       },
-      login: function () {
-        let data = {
-          client_id: 2,
-          client_secret: 'I5TfuXCXf2OP72B1tupts30bM5yR6fN1OtLzALuW',
-          grant_type: 'password',
-          username: this.email,
-          password: this.password
+      setAuthenticatedUser () {
+        let config = {
+          headers: {'Authorization': 'Bearer ' + this.$auth.getToken()}
         }
-        axios.post('http://auctionator.local/oauth/token', data).then((response) => {
-          console.log(response)
-          this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now())
+
+        axios.get('http://auctionserver.ml/api/user', config).then((response) => {
+          this.$auth.setAuthenticatedUser(response.body)
+          this.userName = response.data.name
+          this.coins = response.data.coins
+          this.email = response.data.email
+          this.avatarUrl = response.data.avatarurl
         })
       },
       notify (msg) {
@@ -103,6 +108,9 @@
       isAuth () {
         return this.$auth.isAuthenticated()
       }
+    },
+    created () {
+      this.setAuthenticatedUser()
     }
   }
 </script>

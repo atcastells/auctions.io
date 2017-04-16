@@ -40,13 +40,13 @@
     methods: {
       login: function () {
         let data = {
-          client_id: 2,
-          client_secret: 'I5TfuXCXf2OP72B1tupts30bM5yR6fN1OtLzALuW',
+          client_id: 6,
+          client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
           grant_type: 'password',
           username: this.email,
           password: this.password
         }
-        axios.post('http://auctionator.local/oauth/token', data).then((response) => {
+        axios.post('http://auctionserver.ml/oauth/token', data).then((response) => {
           this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now())
           location.reload()
         })
