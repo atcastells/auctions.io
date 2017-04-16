@@ -88,7 +88,7 @@ function load(component) {
    * build publicPath back to '' so Cordova builds work again.
    */
   mode: 'history',
-  routes: [{ path: '/',
+  routes: [{ path: '/autcions.io/',
     component: load('Index'),
     children: [{
       path: 'login',
@@ -188,10 +188,10 @@ __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */].beforeEach((to, from, n
   console.log(to);
   if (to.path === 'auctions.io') {
     next({
-      path: '/'
+      path: '/auctions.io/'
     });
   }
-  if (to.path === '/') {
+  if (to.path === '/auctions.io/') {
     if (__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].auth.isAuthenticated()) {
       next({
         path: '/home'
