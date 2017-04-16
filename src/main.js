@@ -26,10 +26,10 @@ router.beforeEach(
     console.log(to)
     if (to.path === 'auctions.io') {
       next({
-        path: '/'
+        path: '/auctions.io/'
       })
     }
-    if (to.path === '/') {
+    if (to.path === '/auctions.io/') {
       if (Vue.auth.isAuthenticated()) {
         next({
           path: '/home'

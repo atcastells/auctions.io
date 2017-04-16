@@ -21,7 +21,7 @@ export default new VueRouter({
    */
   mode: 'history',
   routes: [
-    { path: '/',
+    { path: '/autcions.io/',
       component: load('Index'),
       children: [
         {
