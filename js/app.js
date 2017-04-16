@@ -88,7 +88,7 @@ function load(component) {
    * build publicPath back to '' so Cordova builds work again.
    */
   mode: 'history',
-  routes: [{ path: '/auctions.io/',
+  routes: [{ path: '/',
     component: load('Index'),
     children: [{
       path: 'login',
@@ -185,33 +185,27 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODU
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_4_auth__["a" /* default */]);
 
 __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */].beforeEach((to, from, next) => {
-  console.log(to);
-  if (to.path === 'auctions.io') {
-    next({
-      path: '/auctions.io/'
-    });
-  }
-  if (to.path === '/auctions.io/') {
+  if (to.path === '/') {
     if (__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].auth.isAuthenticated()) {
       next({
-        path: '/home'
+        path: 'home'
       });
     } else {
       next({
-        path: '/login'
+        path: 'login'
       });
     }
   }
   if (to.matched.some(record => record.meta.guest)) {
     if (__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].auth.isAuthenticated()) {
       next({
-        path: '/home'
+        path: 'home'
       });
     } else next();
   } else if (to.matched.some(record => record.meta.auth)) {
     if (!__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].auth.isAuthenticated()) {
       next({
-        path: '/login'
+        path: 'login'
       });
     } else next();
   } else next();
