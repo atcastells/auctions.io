@@ -21,7 +21,7 @@ export default new VueRouter({
    */
   mode: 'history',
   routes: [
-    { path: '/auctions.io/',
+    { path: '/',
       component: load('Index'),
       children: [
         {

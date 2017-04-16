@@ -23,28 +23,22 @@ Vue.use(auth)
 
 router.beforeEach(
   (to, from, next) => {
-    console.log(to)
-    if (to.path === 'auctions.io') {
-      next({
-        path: '/auctions.io/'
-      })
-    }
-    if (to.path === '/auctions.io/') {
+    if (to.path === '/') {
       if (Vue.auth.isAuthenticated()) {
         next({
-          path: '/home'
+          path: 'home'
         })
       }
       else {
         next({
-          path: '/login'
+          path: 'login'
         })
       }
     }
     if (to.matched.some(record => record.meta.guest)) {
       if (Vue.auth.isAuthenticated()) {
         next({
-          path: '/home'
+          path: 'home'
         })
       }
       else next()
@@ -52,7 +46,7 @@ router.beforeEach(
     else if (to.matched.some(record => record.meta.auth)) {
       if (!Vue.auth.isAuthenticated()) {
         next({
-          path: '/login'
+          path: 'login'
         })
       }
       else next()
