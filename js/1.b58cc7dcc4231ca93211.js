@@ -95,14 +95,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data() {
     return {
+      userName: '',
       email: '',
-      password: ''
+      coins: '',
+      password: '',
+      avatarUrl: ''
     };
   },
   methods: {
@@ -110,17 +115,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$auth.destroyToken();
       location.reload();
     },
-    login: function () {
-      let data = {
-        client_id: 2,
-        client_secret: 'I5TfuXCXf2OP72B1tupts30bM5yR6fN1OtLzALuW',
-        grant_type: 'password',
-        username: this.email,
-        password: this.password
+    setAuthenticatedUser() {
+      let config = {
+        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('http://auctionator.local/oauth/token', data).then(response => {
-        console.log(response);
-        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now());
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('http://auctionserver.ml/api/user', config).then(response => {
+        this.$auth.setAuthenticatedUser(response.body);
+        this.userName = response.data.name;
+        this.coins = response.data.coins;
+        this.email = response.data.email;
+        this.avatarUrl = response.data.avatarurl;
       });
     },
     notify(msg) {
@@ -137,6 +142,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     isAuth() {
       return this.$auth.isAuthenticated();
     }
+  },
+  created() {
+    this.setAuthenticatedUser();
   }
 });
 
@@ -199,7 +207,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.$refs.userModal.open()
       }
     }
-  }, [_c('i', [_vm._v("account_circle")])]) : _vm._e()]), _vm._v(" "), (_vm.isAuth) ? _c('q-tabs', {
+  }, [_vm._v("\n     Welcome " + _vm._s(_vm.email) + " "), _c('i', [_vm._v("account_circle")])]) : _vm._e()]), _vm._v(" "), (_vm.isAuth) ? _c('q-tabs', {
     slot: "navigation"
   }, [_c('q-tab', {
     attrs: {
@@ -216,9 +224,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         minWidth: '50vw'
       }
     }
-  }, [_c('h4', [_vm._v("Hello username")]), _vm._v(" "), _vm._l((10), function(n) {
-    return _c('p', [_vm._v("User params")])
-  }), _vm._v(" "), _c('div', {
+  }, [_c('h4', [_vm._v("Hello " + _vm._s(_vm.userName))]), _vm._v(" "), _c('div', {
     staticClass: "card-actions"
   }, [_c('div', {
     staticClass: "text-primary"
@@ -249,7 +255,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "auto"
   }), _vm._v(" "), _c('div', {
     staticClass: "text-grey-6"
-  }, [_vm._v("\n        23 minutes ago.\n      ")])])], 2) : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n        23 minutes ago.\n      ")])])]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "layout-padding  fit"
   }, [_c('router-view', {
     staticClass: "layout-view"
