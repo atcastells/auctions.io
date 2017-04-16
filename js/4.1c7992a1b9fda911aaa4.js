@@ -116,12 +116,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     let config = {
       headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
     };
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('http://auctionserver.ml/api/auctions', config).then(response => {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('https://auctionserver.ml/api/auctions', config).then(response => {
       this.auctions = response.data;
     }).catch(function (error) {
       console.log(error);
     });
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('http://auctionserver.ml/api/categories', config).then(response => {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('https://auctionserver.ml/api/categories', config).then(response => {
       this.articleCategories = response.data;
       this.categoryFilter = this.articleCategories.map(a => a.id);
     }).catch(function (error) {

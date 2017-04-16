@@ -78,7 +78,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         username: this.email,
         password: this.password
       };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('http://auctionserver.ml/oauth/token', data).then(response => {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('https://auctionserver.ml/oauth/token', data).then(response => {
         this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now());
         location.reload();
       });

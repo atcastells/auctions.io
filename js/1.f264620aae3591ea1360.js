@@ -120,7 +120,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       };
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('http://auctionserver.ml/api/user', config).then(response => {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('https://auctionserver.ml/api/user', config).then(response => {
         this.$auth.setAuthenticatedUser(response.body);
         this.userName = response.data.name;
         this.coins = response.data.coins;
