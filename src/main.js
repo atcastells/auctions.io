@@ -69,3 +69,4 @@ Quasar.start(() => {
     render: h => h(require('./App'))
   })
 })
+

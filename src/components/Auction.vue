@@ -14,7 +14,7 @@
     },
     created () {
       var id = this.$route.params['id']
-      axios.get('http://auctionator.local/api/auctions/' + id + '/articles').then((response) => {
+      axios.get('https://auctionserver.ml/api/auctions/' + id + '/articles').then((response) => {
         this.auctionObj = response.data
       })
         .catch(function (error) {

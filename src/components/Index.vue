@@ -86,7 +86,7 @@
           headers: {'Authorization': 'Bearer ' + this.$auth.getToken()}
         }
 
-        axios.get('https://crossorigin.me/http://auctionserver.ml/api/user', config).then((response) => {
+        axios.get('https://auctionserver.ml/api/user', config).then((response) => {
           this.$auth.setAuthenticatedUser(response.body)
           this.userName = response.data.name
           this.coins = response.data.coins

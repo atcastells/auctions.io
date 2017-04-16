@@ -46,7 +46,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   created() {
     var id = this.$route.params['id'];
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('http://auctionator.local/api/auctions/' + id + '/articles').then(response => {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('https://auctionserver.ml/api/auctions/' + id + '/articles').then(response => {
       this.auctionObj = response.data;
     }).catch(function (error) {
       console.log(error);
