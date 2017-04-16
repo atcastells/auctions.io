@@ -23,6 +23,12 @@ Vue.use(auth)
 
 router.beforeEach(
   (to, from, next) => {
+    console.log(to)
+    if (to.path === 'auctions.io') {
+      next({
+        path: '/'
+      })
+    }
     if (to.path === '/') {
       if (Vue.auth.isAuthenticated()) {
         next({

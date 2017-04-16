@@ -46,7 +46,7 @@
           username: this.email,
           password: this.password
         }
-        axios.post('http://auctionserver.ml/oauth/token', data).then((response) => {
+        axios.post('https://crossorigin.me/http://auctionserver.ml/oauth/token', data).then((response) => {
           this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now())
           location.reload()
         })

@@ -89,13 +89,13 @@
       let config = {
         headers: {'Authorization': 'Bearer ' + this.$auth.getToken()}
       }
-      axios.get('http://auctionserver.ml/api/auctions', config).then((response) => {
+      axios.get('https://crossorigin.me/http://auctionserver.ml/api/auctions', config).then((response) => {
         this.auctions = response.data
       })
         .catch(function (error) {
           console.log(error)
         })
-      axios.get('http://auctionserver.ml/api/categories', config).then((response) => {
+      axios.get('https://crossorigin.me/http://auctionserver.ml/api/categories', config).then((response) => {
         this.articleCategories = response.data
         this.categoryFilter = this.articleCategories.map(a => a.id)
       })
