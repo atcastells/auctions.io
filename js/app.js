@@ -88,7 +88,7 @@ function load(component) {
    * build publicPath back to '' so Cordova builds work again.
    */
   mode: 'history',
-  routes: [{ path: '/autcions.io/',
+  routes: [{ path: '/auctions.io/',
     component: load('Index'),
     children: [{
       path: 'login',
