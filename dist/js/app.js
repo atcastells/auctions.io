@@ -1,4 +1,4 @@
-webpackJsonp([6],{
+webpackJsonp([7],{
 
 /***/ 127:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -7,9 +7,10 @@ webpackJsonp([6],{
 /* harmony default export */ __webpack_exports__["a"] = (function (Vue) {
   let authenticatedUser = null;
   Vue.auth = {
-    setToken(token, expiration) {
+    setToken(token, expiration, refresh) {
       localStorage.setItem('token', token);
       localStorage.setItem('expiration', expiration);
+      localStorage.setItem('refresh', refresh);
     },
 
     getToken() {
@@ -19,6 +20,7 @@ webpackJsonp([6],{
       if (!token || !expiration) return null;
 
       if (Date.now() > parseInt(expiration)) {
+        console.log('Token expirated, destroying...');
         this.destroyToken();
         return null;
       } else {
@@ -65,14 +67,14 @@ webpackJsonp([6],{
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(161);
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 function load(component) {
-  return () => __webpack_require__(163)(`./${component}.vue`);
+  return () => __webpack_require__(164)(`./${component}.vue`);
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
@@ -120,24 +122,46 @@ function load(component) {
 /***/ }),
 
 /***/ 129:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = (function (Vue) {
+  const DEBUG = false;
+  Vue.utils = {
+    debug: function () {
+      return DEBUG;
+    }
+  };
+  Object.defineProperties(Vue.prototype, {
+    $utils: {
+      get: () => {
+        return Vue.utils;
+      }
+    }
+  });
+});
+
+/***/ }),
+
+/***/ 130:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 130:
+/***/ 131:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(153)
+__webpack_require__(154)
 
-var Component = __webpack_require__(131)(
+var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(150),
+  __webpack_require__(151),
   /* template */
-  __webpack_require__(159),
+  __webpack_require__(160),
   /* scopeId */
   null,
   /* cssModules */
@@ -149,25 +173,27 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 149:
+/***/ 150:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quasar__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quasar__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quasar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_quasar__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(128);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_auth__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_utils__ = __webpack_require__(129);
 // === DEFAULT / CUSTOM STYLE ===
 // WARNING! always comment out ONE of the two require() calls below.
 // 1. use next line to activate CUSTOM STYLE (./src/themes)
 // require(`./themes/app.${__THEME}.styl`)
 // 2. or, use next line to activate DEFAULT QUASAR STYLE
-__webpack_require__(129);
+__webpack_require__(130);
 // ==============================
+
 
 
 
@@ -183,9 +209,14 @@ __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common = {
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_1_quasar___default.a); // Install Quasar Framework
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_3_axios___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_4_auth__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_5_utils__["a" /* default */]);
 
 __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */].beforeEach((to, from, next) => {
-  if (to.path === '/') {
+  console.log(from);
+  console.log(to);
+  if (to.path === '') {
+    to.path = '/';
+  } else if (to.path === '/') {
     if (__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].auth.isAuthenticated()) {
       next({
         path: 'home'
@@ -216,13 +247,13 @@ __WEBPACK_IMPORTED_MODULE_1_quasar___default.a.start(() => {
   new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
     el: '#q-app',
     router: __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */],
-    render: h => h(__webpack_require__(130))
+    render: h => h(__webpack_require__(131))
   });
 });
 
 /***/ }),
 
-/***/ 150:
+/***/ 151:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -242,247 +273,247 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 153:
+/***/ 154:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 157:
+/***/ 158:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 10,
-	"./af.js": 10,
-	"./ar": 17,
-	"./ar-dz": 11,
-	"./ar-dz.js": 11,
-	"./ar-kw": 12,
-	"./ar-kw.js": 12,
-	"./ar-ly": 13,
-	"./ar-ly.js": 13,
-	"./ar-ma": 14,
-	"./ar-ma.js": 14,
-	"./ar-sa": 15,
-	"./ar-sa.js": 15,
-	"./ar-tn": 16,
-	"./ar-tn.js": 16,
-	"./ar.js": 17,
-	"./az": 18,
-	"./az.js": 18,
-	"./be": 19,
-	"./be.js": 19,
-	"./bg": 20,
-	"./bg.js": 20,
-	"./bn": 21,
-	"./bn.js": 21,
-	"./bo": 22,
-	"./bo.js": 22,
-	"./br": 23,
-	"./br.js": 23,
-	"./bs": 24,
-	"./bs.js": 24,
-	"./ca": 25,
-	"./ca.js": 25,
-	"./cs": 26,
-	"./cs.js": 26,
-	"./cv": 27,
-	"./cv.js": 27,
-	"./cy": 28,
-	"./cy.js": 28,
-	"./da": 29,
-	"./da.js": 29,
-	"./de": 32,
-	"./de-at": 30,
-	"./de-at.js": 30,
-	"./de-ch": 31,
-	"./de-ch.js": 31,
-	"./de.js": 32,
-	"./dv": 33,
-	"./dv.js": 33,
-	"./el": 34,
-	"./el.js": 34,
-	"./en-au": 35,
-	"./en-au.js": 35,
-	"./en-ca": 36,
-	"./en-ca.js": 36,
-	"./en-gb": 37,
-	"./en-gb.js": 37,
-	"./en-ie": 38,
-	"./en-ie.js": 38,
-	"./en-nz": 39,
-	"./en-nz.js": 39,
-	"./eo": 40,
-	"./eo.js": 40,
-	"./es": 42,
-	"./es-do": 41,
-	"./es-do.js": 41,
-	"./es.js": 42,
-	"./et": 43,
-	"./et.js": 43,
-	"./eu": 44,
-	"./eu.js": 44,
-	"./fa": 45,
-	"./fa.js": 45,
-	"./fi": 46,
-	"./fi.js": 46,
-	"./fo": 47,
-	"./fo.js": 47,
-	"./fr": 50,
-	"./fr-ca": 48,
-	"./fr-ca.js": 48,
-	"./fr-ch": 49,
-	"./fr-ch.js": 49,
-	"./fr.js": 50,
-	"./fy": 51,
-	"./fy.js": 51,
-	"./gd": 52,
-	"./gd.js": 52,
-	"./gl": 53,
-	"./gl.js": 53,
-	"./gom-latn": 54,
-	"./gom-latn.js": 54,
-	"./he": 55,
-	"./he.js": 55,
-	"./hi": 56,
-	"./hi.js": 56,
-	"./hr": 57,
-	"./hr.js": 57,
-	"./hu": 58,
-	"./hu.js": 58,
-	"./hy-am": 59,
-	"./hy-am.js": 59,
-	"./id": 60,
-	"./id.js": 60,
-	"./is": 61,
-	"./is.js": 61,
-	"./it": 62,
-	"./it.js": 62,
-	"./ja": 63,
-	"./ja.js": 63,
-	"./jv": 64,
-	"./jv.js": 64,
-	"./ka": 65,
-	"./ka.js": 65,
-	"./kk": 66,
-	"./kk.js": 66,
-	"./km": 67,
-	"./km.js": 67,
-	"./kn": 68,
-	"./kn.js": 68,
-	"./ko": 69,
-	"./ko.js": 69,
-	"./ky": 70,
-	"./ky.js": 70,
-	"./lb": 71,
-	"./lb.js": 71,
-	"./lo": 72,
-	"./lo.js": 72,
-	"./lt": 73,
-	"./lt.js": 73,
-	"./lv": 74,
-	"./lv.js": 74,
-	"./me": 75,
-	"./me.js": 75,
-	"./mi": 76,
-	"./mi.js": 76,
-	"./mk": 77,
-	"./mk.js": 77,
-	"./ml": 78,
-	"./ml.js": 78,
-	"./mr": 79,
-	"./mr.js": 79,
-	"./ms": 81,
-	"./ms-my": 80,
-	"./ms-my.js": 80,
-	"./ms.js": 81,
-	"./my": 82,
-	"./my.js": 82,
-	"./nb": 83,
-	"./nb.js": 83,
-	"./ne": 84,
-	"./ne.js": 84,
-	"./nl": 86,
-	"./nl-be": 85,
-	"./nl-be.js": 85,
-	"./nl.js": 86,
-	"./nn": 87,
-	"./nn.js": 87,
-	"./pa-in": 88,
-	"./pa-in.js": 88,
-	"./pl": 89,
-	"./pl.js": 89,
-	"./pt": 91,
-	"./pt-br": 90,
-	"./pt-br.js": 90,
-	"./pt.js": 91,
-	"./ro": 92,
-	"./ro.js": 92,
-	"./ru": 93,
-	"./ru.js": 93,
-	"./sd": 94,
-	"./sd.js": 94,
-	"./se": 95,
-	"./se.js": 95,
-	"./si": 96,
-	"./si.js": 96,
-	"./sk": 97,
-	"./sk.js": 97,
-	"./sl": 98,
-	"./sl.js": 98,
-	"./sq": 99,
-	"./sq.js": 99,
-	"./sr": 101,
-	"./sr-cyrl": 100,
-	"./sr-cyrl.js": 100,
-	"./sr.js": 101,
-	"./ss": 102,
-	"./ss.js": 102,
-	"./sv": 103,
-	"./sv.js": 103,
-	"./sw": 104,
-	"./sw.js": 104,
-	"./ta": 105,
-	"./ta.js": 105,
-	"./te": 106,
-	"./te.js": 106,
-	"./tet": 107,
-	"./tet.js": 107,
-	"./th": 108,
-	"./th.js": 108,
-	"./tl-ph": 109,
-	"./tl-ph.js": 109,
-	"./tlh": 110,
-	"./tlh.js": 110,
-	"./tr": 111,
-	"./tr.js": 111,
-	"./tzl": 112,
-	"./tzl.js": 112,
-	"./tzm": 114,
-	"./tzm-latn": 113,
-	"./tzm-latn.js": 113,
-	"./tzm.js": 114,
-	"./uk": 115,
-	"./uk.js": 115,
-	"./ur": 116,
-	"./ur.js": 116,
-	"./uz": 118,
-	"./uz-latn": 117,
-	"./uz-latn.js": 117,
-	"./uz.js": 118,
-	"./vi": 119,
-	"./vi.js": 119,
-	"./x-pseudo": 120,
-	"./x-pseudo.js": 120,
-	"./yo": 121,
-	"./yo.js": 121,
-	"./zh-cn": 122,
-	"./zh-cn.js": 122,
-	"./zh-hk": 123,
-	"./zh-hk.js": 123,
-	"./zh-tw": 124,
-	"./zh-tw.js": 124
+	"./af": 11,
+	"./af.js": 11,
+	"./ar": 18,
+	"./ar-dz": 12,
+	"./ar-dz.js": 12,
+	"./ar-kw": 13,
+	"./ar-kw.js": 13,
+	"./ar-ly": 14,
+	"./ar-ly.js": 14,
+	"./ar-ma": 15,
+	"./ar-ma.js": 15,
+	"./ar-sa": 16,
+	"./ar-sa.js": 16,
+	"./ar-tn": 17,
+	"./ar-tn.js": 17,
+	"./ar.js": 18,
+	"./az": 19,
+	"./az.js": 19,
+	"./be": 20,
+	"./be.js": 20,
+	"./bg": 21,
+	"./bg.js": 21,
+	"./bn": 22,
+	"./bn.js": 22,
+	"./bo": 23,
+	"./bo.js": 23,
+	"./br": 24,
+	"./br.js": 24,
+	"./bs": 25,
+	"./bs.js": 25,
+	"./ca": 26,
+	"./ca.js": 26,
+	"./cs": 27,
+	"./cs.js": 27,
+	"./cv": 28,
+	"./cv.js": 28,
+	"./cy": 29,
+	"./cy.js": 29,
+	"./da": 30,
+	"./da.js": 30,
+	"./de": 33,
+	"./de-at": 31,
+	"./de-at.js": 31,
+	"./de-ch": 32,
+	"./de-ch.js": 32,
+	"./de.js": 33,
+	"./dv": 34,
+	"./dv.js": 34,
+	"./el": 35,
+	"./el.js": 35,
+	"./en-au": 36,
+	"./en-au.js": 36,
+	"./en-ca": 37,
+	"./en-ca.js": 37,
+	"./en-gb": 38,
+	"./en-gb.js": 38,
+	"./en-ie": 39,
+	"./en-ie.js": 39,
+	"./en-nz": 40,
+	"./en-nz.js": 40,
+	"./eo": 41,
+	"./eo.js": 41,
+	"./es": 43,
+	"./es-do": 42,
+	"./es-do.js": 42,
+	"./es.js": 43,
+	"./et": 44,
+	"./et.js": 44,
+	"./eu": 45,
+	"./eu.js": 45,
+	"./fa": 46,
+	"./fa.js": 46,
+	"./fi": 47,
+	"./fi.js": 47,
+	"./fo": 48,
+	"./fo.js": 48,
+	"./fr": 51,
+	"./fr-ca": 49,
+	"./fr-ca.js": 49,
+	"./fr-ch": 50,
+	"./fr-ch.js": 50,
+	"./fr.js": 51,
+	"./fy": 52,
+	"./fy.js": 52,
+	"./gd": 53,
+	"./gd.js": 53,
+	"./gl": 54,
+	"./gl.js": 54,
+	"./gom-latn": 55,
+	"./gom-latn.js": 55,
+	"./he": 56,
+	"./he.js": 56,
+	"./hi": 57,
+	"./hi.js": 57,
+	"./hr": 58,
+	"./hr.js": 58,
+	"./hu": 59,
+	"./hu.js": 59,
+	"./hy-am": 60,
+	"./hy-am.js": 60,
+	"./id": 61,
+	"./id.js": 61,
+	"./is": 62,
+	"./is.js": 62,
+	"./it": 63,
+	"./it.js": 63,
+	"./ja": 64,
+	"./ja.js": 64,
+	"./jv": 65,
+	"./jv.js": 65,
+	"./ka": 66,
+	"./ka.js": 66,
+	"./kk": 67,
+	"./kk.js": 67,
+	"./km": 68,
+	"./km.js": 68,
+	"./kn": 69,
+	"./kn.js": 69,
+	"./ko": 70,
+	"./ko.js": 70,
+	"./ky": 71,
+	"./ky.js": 71,
+	"./lb": 72,
+	"./lb.js": 72,
+	"./lo": 73,
+	"./lo.js": 73,
+	"./lt": 74,
+	"./lt.js": 74,
+	"./lv": 75,
+	"./lv.js": 75,
+	"./me": 76,
+	"./me.js": 76,
+	"./mi": 77,
+	"./mi.js": 77,
+	"./mk": 78,
+	"./mk.js": 78,
+	"./ml": 79,
+	"./ml.js": 79,
+	"./mr": 80,
+	"./mr.js": 80,
+	"./ms": 82,
+	"./ms-my": 81,
+	"./ms-my.js": 81,
+	"./ms.js": 82,
+	"./my": 83,
+	"./my.js": 83,
+	"./nb": 84,
+	"./nb.js": 84,
+	"./ne": 85,
+	"./ne.js": 85,
+	"./nl": 87,
+	"./nl-be": 86,
+	"./nl-be.js": 86,
+	"./nl.js": 87,
+	"./nn": 88,
+	"./nn.js": 88,
+	"./pa-in": 89,
+	"./pa-in.js": 89,
+	"./pl": 90,
+	"./pl.js": 90,
+	"./pt": 92,
+	"./pt-br": 91,
+	"./pt-br.js": 91,
+	"./pt.js": 92,
+	"./ro": 93,
+	"./ro.js": 93,
+	"./ru": 94,
+	"./ru.js": 94,
+	"./sd": 95,
+	"./sd.js": 95,
+	"./se": 96,
+	"./se.js": 96,
+	"./si": 97,
+	"./si.js": 97,
+	"./sk": 98,
+	"./sk.js": 98,
+	"./sl": 99,
+	"./sl.js": 99,
+	"./sq": 100,
+	"./sq.js": 100,
+	"./sr": 102,
+	"./sr-cyrl": 101,
+	"./sr-cyrl.js": 101,
+	"./sr.js": 102,
+	"./ss": 103,
+	"./ss.js": 103,
+	"./sv": 104,
+	"./sv.js": 104,
+	"./sw": 105,
+	"./sw.js": 105,
+	"./ta": 106,
+	"./ta.js": 106,
+	"./te": 107,
+	"./te.js": 107,
+	"./tet": 108,
+	"./tet.js": 108,
+	"./th": 109,
+	"./th.js": 109,
+	"./tl-ph": 110,
+	"./tl-ph.js": 110,
+	"./tlh": 111,
+	"./tlh.js": 111,
+	"./tr": 112,
+	"./tr.js": 112,
+	"./tzl": 113,
+	"./tzl.js": 113,
+	"./tzm": 115,
+	"./tzm-latn": 114,
+	"./tzm-latn.js": 114,
+	"./tzm.js": 115,
+	"./uk": 116,
+	"./uk.js": 116,
+	"./ur": 117,
+	"./ur.js": 117,
+	"./uz": 119,
+	"./uz-latn": 118,
+	"./uz-latn.js": 118,
+	"./uz.js": 119,
+	"./vi": 120,
+	"./vi.js": 120,
+	"./x-pseudo": 121,
+	"./x-pseudo.js": 121,
+	"./yo": 122,
+	"./yo.js": 122,
+	"./zh-cn": 123,
+	"./zh-cn.js": 123,
+	"./zh-hk": 124,
+	"./zh-hk.js": 124,
+	"./zh-tw": 125,
+	"./zh-tw.js": 125
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -498,11 +529,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 157;
+webpackContext.id = 158;
 
 /***/ }),
 
-/***/ 159:
+/***/ 160:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -515,29 +546,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ }),
 
-/***/ 163:
+/***/ 164:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"./Auction.vue": [
-		166,
-		3
-	],
-	"./Error404.vue": [
-		167,
-		2
-	],
-	"./Home.vue": [
 		168,
 		4
 	],
-	"./Index.vue": [
+	"./Error404.vue": [
 		169,
-		1
+		3
+	],
+	"./Home.vue": [
+		170,
+		5
+	],
+	"./Index.vue": [
+		171,
+		0
 	],
 	"./Login.vue": [
-		170,
-		0
+		172,
+		2
+	],
+	"./infoCard.vue": [
+		167,
+		1
 	]
 };
 function webpackAsyncContext(req) {
@@ -552,8 +587,8 @@ webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
 module.exports = webpackAsyncContext;
-webpackAsyncContext.id = 163;
+webpackAsyncContext.id = 164;
 
 /***/ })
 
-},[149]);
+},[150]);

@@ -47,7 +47,7 @@
           password: this.password
         }
         axios.post('https://auctionserver.ml/oauth/token', data).then((response) => {
-          this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now())
+          this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token)
           location.reload()
         })
       },

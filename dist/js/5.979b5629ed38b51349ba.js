@@ -1,13 +1,13 @@
-webpackJsonp([4],{
+webpackJsonp([5],{
 
-/***/ 168:
+/***/ 170:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(131)(
+var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(173),
+  __webpack_require__(179),
   /* template */
-  __webpack_require__(186),
+  __webpack_require__(190),
   /* scopeId */
   null,
   /* cssModules */
@@ -19,13 +19,56 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 173:
+/***/ 179:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -71,7 +114,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       categoryFilter: [],
       auctions: [],
       now: '',
-      auctionTimeRemaining: []
+      auctionTimeRemaining: [],
+      currentBid: 0,
+      currentAuction: null,
+      minBid: 0
     };
   },
   methods: {
@@ -99,16 +145,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
       return pendingTime.toString();
     },
-    auction: function (id) {
-      this.$router.push({
-        name: 'auction',
-        params: {
-          id: id
-        }
-      });
-    },
     auctionEnd: function (time) {
       return this.calculateTime(time) < 0;
+    },
+    bid: function (minBid, id) {
+      this.minBid = minBid;
+      this.currentBid = minBid;
+      this.currentAuction = id;
+      this.$refs.bidModal.open();
     }
   },
   computed: {},
@@ -137,21 +181,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 186:
+/***/ 190:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
     staticClass: "row auto large-gutter"
   }, _vm._l((_vm.auctions), function(i) {
-    return (i.closed != 1 && _vm.calculateTime(i.enddate, i.id) >= 0) ? _c('div', {
+    return (i.closed != 1 && _vm.calculateTime(i.enddate, i.id) >= 0 && i.articles.length > 0) ? _c('div', {
       key: i.id,
       staticClass: "width-1of3"
     }, [_c('div', {
       staticClass: "card shadow-4 bg-white"
     }, [_c('div', {
       staticClass: "card-title"
-    }, [_vm._v(" Auction items: ")]), _vm._v(" "), _c('div', {
+    }, [_vm._v(" Auction id: #" + _vm._s(i.id) + "\n          ")]), _vm._v(" "), _c('div', {
       staticClass: "list item-delimiter"
     }, _vm._l((i.articles), function(item) {
       return _c('q-collapsible', {
@@ -170,18 +214,76 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })), _vm._v(" "), _c('div', {
       staticClass: "card-actions card-no-top-padding"
     }, [_c('div', {
-      staticClass: "text-lime"
+      staticClass: "text-secondary"
     }, [_vm._v("\n              Ends in:\n            ")]), _vm._v(" "), _c('div', [_vm._v("\n              " + _vm._s(_vm.msToTime(_vm.calculateTime(i.enddate, i.id))) + "\n            ")]), _vm._v(" "), _c('div', {
       staticClass: "auto"
-    }), _vm._v(" "), _vm._m(0, true)])])]) : _vm._e()
-  }))])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "primary clear small"
-  }, [_c('i', {
-    staticClass: "on-left"
-  }, [_vm._v("attach_money")]), _vm._v(" Bid")])
-}]}
+    }), _vm._v(" "), _c('button', {
+      staticClass: "primary clear small",
+      on: {
+        "click": function($event) {
+          _vm.bid(i.minbid, i.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "on-left"
+    }, [_vm._v("attach_money")]), _vm._v(" Bid")])])])]) : _vm._e()
+  })), _vm._v(" "), _c('q-modal', {
+    ref: "bidModal",
+    attrs: {
+      "content-css": {
+        minWidth: '80vw',
+        minHeight: '40vh'
+      }
+    }
+  }, [_c('q-layout', [_c('div', {
+    staticClass: "toolbar bg-white text-secondary",
+    slot: "header"
+  }, [_c('q-toolbar-title', {
+    attrs: {
+      "padding": 1
+    }
+  }, [_vm._v("\n          Auction nº " + _vm._s(_vm.currentAuction) + "\n        ")])], 1), _vm._v(" "), _c('div', {
+    staticClass: "layout-content"
+  }, [_c('div', {
+    staticClass: "layout-view"
+  }, [_c('div', {
+    staticClass: "layout-padding"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [(_vm.minBid > 0) ? _c('q-range', {
+    attrs: {
+      "min": _vm.minBid,
+      "max": 1000,
+      "step": 1,
+      "labelAlways": "",
+      "snap": ""
+    },
+    model: {
+      value: (_vm.currentBid),
+      callback: function($$v) {
+        _vm.currentBid = $$v
+      },
+      expression: "currentBid"
+    }
+  }) : _vm._e()], 1), _vm._v(" "), _c('div', {
+    staticClass: "row big-gutter"
+  }, [_c('div', {
+    staticClass: "width-1of3"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "width-1of3"
+  }, [_c('div', {
+    staticClass: "card bg-secondary text-white"
+  }, [_c('h2', {
+    staticClass: "text-center"
+  }, [_vm._v(_vm._s(_vm.currentBid) + " Coins")]), _vm._v(" "), _c('q-tooltip', {
+    attrs: {
+      "anchor": "bottom middle",
+      "offset": [0, 50]
+    }
+  }, [_c('strong', [_vm._v("Click to post your bid")])])], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "width-1of3"
+  })])])])])])], 1)], 1)
+},staticRenderFns: []}
 
 /***/ })
 

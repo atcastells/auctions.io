@@ -18,19 +18,25 @@
       <q-tab icon="home" route="/home" exact replace></q-tab>
     </q-tabs>
 
-    <!--<q-drawer ref="drawer">-->
-      <!--<div class="toolbar">-->
-        <!--<q-toolbar-title>-->
-          <!--Drawer Title-->
-        <!--</q-toolbar-title>-->
-      <!--</div>-->
+    <q-drawer v-if="isAuth" ref="drawer">
+      <div class="toolbar">
+        <q-toolbar-title>
+          Stats
+        </q-toolbar-title>
+      </div>
 
-      <!--<div class="list no-border platform-delimiter">-->
-        <!--<q-drawer-link icon="mail" :to="{path: '/', exact: true}">-->
-          <!--Link-->
-        <!--</q-drawer-link>-->
-      <!--</div>-->
-    <!--</q-drawer>-->
+      <div v-if="isAuth" class="list platform-delimiter">
+        <div style="text-align: center" class="generic-margin">
+          <img style="border-radius: 30%; height: 100px;" :src="avatarUrl"/>
+        </div>
+        <div class="item two-lines">
+          <i class="item-primary">monetization_on</i>
+          <div class="item-content">
+            <input type="number" readonly class="full-width" :value="coins">
+          </div>
+        </div>
+      </div>
+    </q-drawer>
     <q-modal v-if="isAuth" ref="userModal" class="maximized" :content-css="{padding: '10px 40px 5px 40px', minWidth: '50vw'}">
 
       <q-layout>
@@ -55,10 +61,10 @@
                 background = "bg-white"
                 ></info-card>
               </div>
-            </div>
-
-            <div class="text-primary">
-              <button class="red" @click="disconnect">Log out</button>
+              <div class="width-1of4 ">
+              </div>
+              <div class="width-1of4 ">
+              </div>
             </div>
           </div>
         </div>
@@ -66,20 +72,21 @@
 
     </q-modal>
 
-
-    <div class="layout-padding  fit">
+    <div class="layout-padding generic-margin fit">
     <router-view class="layout-view"></router-view>
     </div>
 
-    <q-fab
-      class="absolute-bottom-right"
-      @click="alert()"
-      classNames="primary"
-      active-icon="down"
-      direction="up"
-      style="right: 18px; bottom: 18px;"
-    >
-      <q-small-fab class="purple" @click.native="disconnect()" icon="exit_to_app"></q-small-fab>
+    <q-fab v-if="isAuth" class="absolute-bottom-right" @click="alert()" classNames="primary" icon="settings" active-icon="settings" direction="up" style="right: 18px; bottom: 18px;">
+      <q-small-fab ref="logout" class="purple" @click.native="disconnect()" icon="exit_to_app">
+        <q-tooltip anchor="center right" self="center left" :offset="[-20, 0]">
+          <strong>Close session <i>keyboard_arrow_right</i></strong>
+        </q-tooltip>
+      </q-small-fab>
+      <q-small-fab v-if="this.$utils.debug()" ref="refreshSession" class="red" @click.native="refreshSession()" icon="refresh">
+        <q-tooltip anchor="center right" self="center left" :offset="[-20, 0]">
+          <strong>Refresh token's (DEBUG)<i>keyboard_arrow_right</i></strong>
+        </q-tooltip>
+      </q-small-fab>
     </q-fab>
 
     <div slot="footer" class="toolbar"></div>
@@ -98,7 +105,7 @@
       return {
         userName: '',
         email: '',
-        coins: 100,
+        coins: '',
         password: '',
         avatarUrl: ''
       }
@@ -116,13 +123,32 @@
         axios.get('https://auctionserver.ml/api/user', config).then((response) => {
           this.$auth.setAuthenticatedUser(response.body)
           this.userName = response.data.name
-//          this.coins = response.data.coins
+          this.coins = response.data.coins
           this.email = response.data.email
-          this.avatarUrl = response.data.avatarurl
+          this.avatarUrl = this.getAvatar(this.email, 200)
         })
       },
       notify (msg) {
         Toast.create(msg)
+      },
+      getAvatar: function (email, size) {
+        let uri = 'https://api.adorable.io/avatars/' + size + '/' + email + '.png'
+        return uri
+      },
+      refreshSession: function () {
+        let data = {
+          client_id: 6,
+          client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
+          grant_type: 'refresh_token',
+          refresh_token: localStorage.getItem('refresh')
+        }
+        axios.post('https://auctionserver.ml/oauth/token', data).then((response) => {
+          if (this.$utils.debug()) {
+            console.log('Old token: ' + this.$auth.getToken())
+            console.log('New token: ' + response.data.access_token)
+          }
+          this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token)
+        })
       }
     },
     props: {
@@ -139,11 +165,12 @@
     created () {
       if (this.isAuth) {
         this.setAuthenticatedUser()
-        if (this.$route.path === '/') {
-          location.reload()
-          console.log('asd')
-        }
       }
+    },
+    mounted () {
+      window.setInterval(() => {
+        this.refreshSession()
+      }, 180000)
     }
   }
 </script>

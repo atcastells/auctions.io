@@ -2,9 +2,13 @@
   <div>
       <div class="row auto large-gutter">
         <!--  Auction card (loop)  -->
-        <div class="width-1of3"  v-if="i.closed != 1 && calculateTime(i.enddate,i.id) >= 0" v-for="i in auctions" :key="i.id">
+        <div class="width-1of3"
+             v-if="i.closed != 1 && calculateTime(i.enddate,i.id) >= 0 && i.articles.length > 0"
+             v-for="i in auctions"
+             :key="i.id">
           <div class="card shadow-4 bg-white">
-            <div class="card-title"> Auction items: </div>
+            <div class="card-title"> Auction id: #{{i.id}}
+            </div>
             <div class="list item-delimiter">
               <q-collapsible v-for="item in i.articles" icon="explore" :label="item.name" :key="item.id">
                 <div class="item">
@@ -23,13 +27,52 @@
                 {{msToTime(calculateTime(i.enddate,i.id))}}
               </div>
               <div class="auto"></div>
-              <button class="primary clear small"><i class="on-left">attach_money</i> Bid</button>
+              <button @click="bid(i.minbid,i.id)" class="primary clear small"><i class="on-left">attach_money</i> Bid</button>
             </div>
 
           </div>
         </div>
         <!--  End auction Card  -->
       </div>
+
+    <q-modal ref="bidModal" :content-css="{minWidth: '80vw', minHeight: '40vh'}">
+      <q-layout>
+        <div slot="header" class="toolbar bg-white text-secondary">
+          <q-toolbar-title :padding="1">
+            Auction nº {{currentAuction}}
+          </q-toolbar-title>
+        </div>
+        <div class="layout-content">
+        <div class="layout-view">
+          <div class="layout-padding">
+            <div class="row">
+            <q-range
+              v-if="minBid > 0"
+              v-model="currentBid"
+              :min="minBid"
+              :max="1000"
+              :step="1"
+              labelAlways
+              snap>
+            </q-range>
+            </div>
+            <div class="row big-gutter">
+              <div class="width-1of3"></div>
+              <div class="width-1of3">
+                <div class="card bg-secondary text-white">
+                  <h2 class="text-center">{{currentBid}} Coins</h2>
+                  <q-tooltip anchor="bottom middle" :offset="[0, 50]">
+                    <strong>Click to post your bid</strong>
+                  </q-tooltip>
+                </div>
+              </div>
+              <div class="width-1of3"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </q-layout>
+    </q-modal>
 
     </div>
 </template>
@@ -43,7 +86,10 @@
         categoryFilter: [],
         auctions: [],
         now: '',
-        auctionTimeRemaining: []
+        auctionTimeRemaining: [],
+        currentBid: 0,
+        currentAuction: null,
+        minBid: 0
       }
     },
     methods: {
@@ -71,16 +117,14 @@
         }
         return pendingTime.toString()
       },
-      auction: function (id) {
-        this.$router.push({
-          name: 'auction',
-          params: {
-            id: id
-          }
-        })
-      },
       auctionEnd: function (time) {
         return this.calculateTime(time) < 0
+      },
+      bid: function (minBid, id) {
+        this.minBid = minBid
+        this.currentBid = minBid
+        this.currentAuction = id
+        this.$refs.bidModal.open()
       }
     },
     computed: {

@@ -1,17 +1,17 @@
-webpackJsonp([0],{
+webpackJsonp([2],{
 
-/***/ 170:
+/***/ 172:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(182)
+__webpack_require__(187)
 
-var Component = __webpack_require__(131)(
+var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(175),
+  __webpack_require__(181),
   /* template */
-  __webpack_require__(187),
+  __webpack_require__(191),
   /* scopeId */
   null,
   /* cssModules */
@@ -23,7 +23,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 175:
+/***/ 181:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79,7 +79,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         password: this.password
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('https://auctionserver.ml/oauth/token', data).then(response => {
-        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now());
+        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token);
         location.reload();
       });
     },
@@ -93,10 +93,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 178:
+/***/ 184:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(164)();
+exports = module.exports = __webpack_require__(165)();
 // imports
 
 
@@ -108,21 +108,21 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 182:
+/***/ 187:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(178);
+var content = __webpack_require__(184);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(165)("0a9cec92", content, true);
+var update = __webpack_require__(166)("0a9cec92", content, true);
 
 /***/ }),
 
-/***/ 187:
+/***/ 191:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
