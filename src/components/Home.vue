@@ -16,7 +16,7 @@
               </q-collapsible>
             </div>
             <div class="card-actions card-no-top-padding">
-              <div class="text-lime">
+              <div class="text-secondary">
                 Ends in:
               </div>
               <div>
