@@ -148,7 +148,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     auctionEnd: function (time) {
       return this.calculateTime(time) < 0;
     },
-    bid: function (minBid, id) {
+    bidModal: function (minBid, id) {
       this.minBid = minBid;
       this.currentBid = minBid;
       this.currentAuction = id;
@@ -221,7 +221,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "primary clear small",
       on: {
         "click": function($event) {
-          _vm.bid(i.minbid, i.id)
+          _vm.bidModal(i.minbid, i.id)
         }
       }
     }, [_c('i', {
@@ -280,7 +280,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "anchor": "bottom middle",
       "offset": [0, 50]
     }
-  }, [_c('strong', [_vm._v("Click to post your bid")])])], 1)]), _vm._v(" "), _c('div', {
+  }, [_c('strong', [_vm._v("Click to post your bidModal")])])], 1)]), _vm._v(" "), _c('div', {
     staticClass: "width-1of3"
   })])])])])])], 1)], 1)
 },staticRenderFns: []}

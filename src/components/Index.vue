@@ -103,6 +103,7 @@
     },
     data () {
       return {
+        userId: '',
         userName: '',
         email: '',
         coins: '',
@@ -122,6 +123,7 @@
 
         axios.get('https://auctionserver.ml/api/user', config).then((response) => {
           this.$auth.setAuthenticatedUser(response.body)
+          this.userId = response.data.id
           this.userName = response.data.name
           this.coins = response.data.coins
           this.email = response.data.email

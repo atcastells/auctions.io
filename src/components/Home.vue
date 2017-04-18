@@ -27,7 +27,7 @@
                 {{msToTime(calculateTime(i.enddate,i.id))}}
               </div>
               <div class="auto"></div>
-              <button @click="bid(i.minbid,i.id)" class="primary clear small"><i class="on-left">attach_money</i> Bid</button>
+              <button @click="bidModal(i.minbid,i.id)" class="primary clear small"><i class="on-left">attach_money</i> Bid</button>
             </div>
 
           </div>
@@ -35,7 +35,7 @@
         <!--  End auction Card  -->
       </div>
 
-    <q-modal ref="bidModal" :content-css="{minWidth: '80vw', minHeight: '40vh'}">
+    <q-modal ref="bidModal" :content-css="{minWidth: '80vw', minHeight: '50vh'}">
       <q-layout>
         <div slot="header" class="toolbar bg-white text-secondary">
           <q-toolbar-title :padding="1">
@@ -45,28 +45,35 @@
         <div class="layout-content">
         <div class="layout-view">
           <div class="layout-padding">
-            <div class="row">
-            <q-range
-              v-if="minBid > 0"
-              v-model="currentBid"
-              :min="minBid"
-              :max="1000"
-              :step="1"
-              labelAlways
-              snap>
-            </q-range>
-            </div>
+            <!--<div class="row">-->
+            <!--&lt;!&ndash;<q-range v-if="minBid > 0" v-model="currentBid" :min="minBid" :max="1000" :step="1" labelAlways snap></q-range>&ndash;&gt;-->
+            <!--</div>-->
             <div class="row big-gutter">
-              <div class="width-1of3"></div>
+
               <div class="width-1of3">
-                <div class="card bg-secondary text-white">
-                  <h2 class="text-center">{{currentBid}} Coins</h2>
-                  <q-tooltip anchor="bottom middle" :offset="[0, 50]">
-                    <strong>Click to post your bid</strong>
-                  </q-tooltip>
-                </div>
+
+                <q-numeric
+                  v-model="currentBid"
+                  :min="minBid"
+                ></q-numeric>
+
               </div>
-              <div class="width-1of3"></div>
+
+              <div class="width-1of3">
+
+
+
+              </div>
+
+              <div class="width-1of3">
+                <!--<div v-on:click="bid()" class="card bg-secondary text-white">-->
+                  <!--<h2 class="text-center">{{currentBid}} Coins</h2>-->
+                  <!--<q-tooltip anchor="bottom middle" :offset="[0, 50]">-->
+                    <!--<strong>Click to post your bid</strong>-->
+                  <!--</q-tooltip>-->
+                <!--</div>-->
+              </div>
+
             </div>
           </div>
         </div>
@@ -120,11 +127,27 @@
       auctionEnd: function (time) {
         return this.calculateTime(time) < 0
       },
-      bid: function (minBid, id) {
+      bidModal: function (minBid, id) {
         this.minBid = minBid
         this.currentBid = minBid
         this.currentAuction = id
         this.$refs.bidModal.open()
+      },
+      bid: function () {
+        let config = {
+          headers: {'Authorization': 'Bearer ' + this.$auth.getToken()}
+        }
+        let data = {
+          coins: this.currentBid,
+          user: 9,
+          auction: this.currentAuction
+        }
+        axios.post('https://auctionserver.ml/api/bids', data, config).then((response) => {
+          console.log(response.data)
+        })
+          .catch(function (error) {
+            console.log(error)
+          })
       }
     },
     computed: {
