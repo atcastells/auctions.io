@@ -338,6 +338,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data() {
     return {
+      userId: '',
       userName: '',
       email: '',
       coins: '',
@@ -357,6 +358,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('https://auctionserver.ml/api/user', config).then(response => {
         this.$auth.setAuthenticatedUser(response.body);
+        this.userId = response.data.id;
         this.userName = response.data.name;
         this.coins = response.data.coins;
         this.email = response.data.email;

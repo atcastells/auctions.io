@@ -2,7 +2,7 @@
   <div>
       <div class="row auto large-gutter">
         <!--  Auction card (loop)  -->
-        <div class="width-1of3"
+        <div class="width-2of5"
              v-if="i.closed != 1 && calculateTime(i.enddate,i.id) >= 0 && i.articles.length > 0"
              v-for="i in auctions"
              :key="i.id">
@@ -11,10 +11,9 @@
             </div>
             <div class="list item-delimiter">
               <q-collapsible v-for="item in i.articles" icon="explore" :label="item.name" :key="item.id">
-                <div class="item">
-                  <i class="item-primary">info_outline</i>
-                  <div class="item-content">
-                    {{item.description}}
+                <div class="item multiple-lines">
+                  <div class="item-content has-secondary">
+                      {{item.description}}
                   </div>
                 </div>
               </q-collapsible>
@@ -33,53 +32,38 @@
           </div>
         </div>
         <!--  End auction Card  -->
+
+        <q-modal ref="bidModal" :content-css="{padding: '10px'}">
+          <div slot="header" class="toolbar bg-white text-secondary">
+              <q-toolbar-title :padding="1">
+                Auction nº {{currentAuction}}
+          </q-toolbar-title>
+            </div>
+                  <!--<div class="row">-->
+                  <!--&lt;!&ndash;<q-range v-if="minBid > 0" v-model="currentBid" :min="minBid" :max="1000" :step="1" labelAlways snap></q-range>&ndash;&gt;-->
+                  <!--</div>-->
+                  <div class="row generic-margin">
+                    <div class="width-1of3 ">
+                    </div>
+                    <div class="width-1of3 ">
+                      <q-numeric
+                        v-model="currentBid"
+                        :min="minBid"
+                      ></q-numeric>
+                    </div>
+                    <div class="width-1of3 ">
+                    </div>
+                  </div>
+                  <div class="row no-margin">
+                    <button class="primary full-width" @click="bid()">
+                      Bid!
+                    </button>
+                  </div>
+        </q-modal>
+
       </div>
 
-    <q-modal ref="bidModal" :content-css="{minWidth: '80vw', minHeight: '50vh'}">
-      <q-layout>
-        <div slot="header" class="toolbar bg-white text-secondary">
-          <q-toolbar-title :padding="1">
-            Auction nº {{currentAuction}}
-          </q-toolbar-title>
-        </div>
-        <div class="layout-content">
-        <div class="layout-view">
-          <div class="layout-padding">
-            <!--<div class="row">-->
-            <!--&lt;!&ndash;<q-range v-if="minBid > 0" v-model="currentBid" :min="minBid" :max="1000" :step="1" labelAlways snap></q-range>&ndash;&gt;-->
-            <!--</div>-->
-            <div class="row big-gutter">
 
-              <div class="width-1of3">
-
-                <q-numeric
-                  v-model="currentBid"
-                  :min="minBid"
-                ></q-numeric>
-
-              </div>
-
-              <div class="width-1of3">
-
-
-
-              </div>
-
-              <div class="width-1of3">
-                <!--<div v-on:click="bid()" class="card bg-secondary text-white">-->
-                  <!--<h2 class="text-center">{{currentBid}} Coins</h2>-->
-                  <!--<q-tooltip anchor="bottom middle" :offset="[0, 50]">-->
-                    <!--<strong>Click to post your bid</strong>-->
-                  <!--</q-tooltip>-->
-                <!--</div>-->
-              </div>
-
-            </div>
-          </div>
-        </div>
-        </div>
-      </q-layout>
-    </q-modal>
 
     </div>
 </template>
@@ -140,9 +124,8 @@
         let data = {
           coins: this.currentBid,
           user: 9,
-          auction: this.currentAuction
         }
-        axios.post('https://auctionserver.ml/api/bids', data, config).then((response) => {
+        axios.post('https://auctionserver.ml/api/auctions/'+this.currentAuction+'/bids', data, config).then((response) => {
           console.log(response.data)
         })
           .catch(function (error) {
