@@ -108,7 +108,8 @@
         email: '',
         coins: '',
         password: '',
-        avatarUrl: ''
+        avatarUrl: '',
+        userBids: ''
       }
     },
     methods: {
@@ -117,6 +118,7 @@
         location.reload()
       },
       setAuthenticatedUser () {
+        let api = this.$utils.getApiUrl()
         let config = {
           headers: {'Authorization': 'Bearer ' + this.$auth.getToken()}
         }
@@ -128,6 +130,8 @@
           this.coins = response.data.coins
           this.email = response.data.email
           this.avatarUrl = this.getAvatar(this.email, 200)
+        })
+        axios.get(api + 'bids', config).then((response) => {
         })
       },
       notify (msg) {

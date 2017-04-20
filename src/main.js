@@ -25,12 +25,7 @@ Vue.use(utils)
 
 router.beforeEach(
   (to, from, next) => {
-    console.log(from)
-    console.log(to)
-    if (to.path === '') {
-      to.path = ('/')
-    }
-    else if (to.path === '/') {
+    if (to.path === '/') {
       if (Vue.auth.isAuthenticated()) {
         next({
           path: 'home'
@@ -70,4 +65,3 @@ Quasar.start(() => {
     render: h => h(require('./App'))
   })
 })
-
