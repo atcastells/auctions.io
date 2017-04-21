@@ -9,14 +9,21 @@
         {{title}}
       </q-toolbar-title>
       </div>
-      <button v-if="isAuth" @click="$refs.userModal.open()">
+      <button v-if="isAuth" @click="$refs.userModal.open()" >
        Welcome {{email}} <i>account_circle</i>
+      </button>
+
+      <button v-if="isAuth" @click="disconnect()">
+       <i>exit_to_app</i>
+       <q-tooltip self="bottom bottom" :offset="[-20, 0]">
+         <strong>Close session</strong>
+       </q-tooltip>
       </button>
     </div>
 
-    <q-tabs v-if="isAuth" slot="navigation">
+    <!-- <q-tabs v-if="isAuth" slot="navigation">
       <q-tab icon="home" route="/home" exact replace></q-tab>
-    </q-tabs>
+    </q-tabs> -->
 
     <q-drawer v-if="isAuth" ref="drawer">
       <div class="toolbar">
@@ -37,6 +44,7 @@
         </div>
       </div>
     </q-drawer>
+
     <q-modal v-if="isAuth" ref="userModal" class="maximized" :content-css="{padding: '10px 40px 5px 40px', minWidth: '50vw'}">
 
       <q-layout>
@@ -69,26 +77,11 @@
           </div>
         </div>
       </q-layout>
-
     </q-modal>
 
     <div class="layout-padding generic-margin fit">
     <router-view class="layout-view"></router-view>
     </div>
-
-    <q-fab v-if="isAuth" class="absolute-bottom-right" @click="alert()" classNames="primary" icon="settings" active-icon="settings" direction="up" style="right: 18px; bottom: 18px;">
-      <q-small-fab ref="logout" class="purple" @click.native="disconnect()" icon="exit_to_app">
-        <q-tooltip anchor="center right" self="center left" :offset="[-20, 0]">
-          <strong>Close session <i>keyboard_arrow_right</i></strong>
-        </q-tooltip>
-      </q-small-fab>
-      <q-small-fab v-if="this.$utils.debug()" ref="refreshSession" class="red" @click.native="refreshSession()" icon="refresh">
-        <q-tooltip anchor="center right" self="center left" :offset="[-20, 0]">
-          <strong>Refresh token's (DEBUG)<i>keyboard_arrow_right</i></strong>
-        </q-tooltip>
-      </q-small-fab>
-    </q-fab>
-
     <div slot="footer" class="toolbar"></div>
   </q-layout>
 </template>
