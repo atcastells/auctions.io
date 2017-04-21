@@ -97,23 +97,22 @@ export default {
       return this.calculateTime(time) < 0
     },
     bidModal: function (minBid, id) {
+      if (!this.canBid) {
+        this.notify("You don't have enougth coins to make a bid.")
+        return
+      }
       this.minBid = minBid
       this.currentBid = minBid
       this.currentAuction = id
       this.$refs.bidModal.open()
-      if (!this.canBid) {
-        this.notify("You don't have enougth coins to make a bid.")
-      }
     },
     bid: function () {
-      let config = {
-        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
-      }
+      let api = this.$utils.getApiUrl()
       let data = {
         coins: this.currentBid,
         user: 9
       }
-      axios.post('https://auctionserver.ml/api/auctions/' + this.currentAuction + '/bids', data, config).then((response) => {
+      axios.post(api + 'auctions/' + this.currentAuction + '/bids', data, this.config).then((response) => {
         console.log(response.data)
       })
       .catch(function (error) {
