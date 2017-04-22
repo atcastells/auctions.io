@@ -1,12 +1,16 @@
 export default function (Vue) {
   const DEBUG = false
-  const API_URL = 'https://auctionserver.ml/api/'
+  const URL = 'https://auctionserver.ml/'
+  const API_URL = 'api/'
   Vue.utils = {
     debug: function () {
       return DEBUG
     },
+    getUrl: function () {
+      return URL
+    },
     getApiUrl: function () {
-      return API_URL
+      return URL + API_URL
     }
   }
   Object.defineProperties(Vue.prototype, {

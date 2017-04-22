@@ -1,6 +1,6 @@
 <template>
   <q-layout class="bg-grey-14">
-    <div slot="header" class="toolbar">
+    <div slot="header" class="toolbar bg-white text-secondary">
       <div class="toolbar-content">
       <button class="hide-on-drawer-visible" @click="$refs.drawer.toggle()">
         <i>menu</i>
@@ -80,7 +80,10 @@
     </q-modal>
 
     <div class="layout-padding generic-margin fit">
-    <router-view class="layout-view"></router-view>
+      <transition name="fade">
+        <router-view class="layout-view">
+        </router-view>
+      </transition>
     </div>
     <div slot="footer" class="toolbar"></div>
   </q-layout>

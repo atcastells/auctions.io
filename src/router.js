@@ -33,6 +33,14 @@ export default new VueRouter({
           }
         },
         {
+          path: 'register',
+          name: 'register',
+          component: load('Register'),
+          meta: {
+            guest: true
+          }
+        },
+        {
           path: 'home',
           name: 'home',
           component: load('Home'),
