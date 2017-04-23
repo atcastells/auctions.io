@@ -21,8 +21,10 @@
           </div>
           <div class="width-1of2 ">
             <cash-card
+            @updateCoins="updateUser"
             :coins="user.coins"
-            :paymentMethods="paymentMethods"
+            :paymentMethods = "paymentMethods"
+            :id = "user.id"
             ></cash-card>
           </div>
           <div class="width-1of2 ">
@@ -58,6 +60,9 @@ export default {
     this.getShipmentAddresses(this.user.id)
   },
   methods: {
+    updateUser: function () {
+      this.$emit('updateUser')
+    },
     close: function () {
       this.$emit('closeProfile')
     },

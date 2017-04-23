@@ -59,7 +59,7 @@
 
   <q-modal ref="userModal" class="maximized" :content-css="{padding: '10px 40px 5px 40px', minWidth: '50vw'}">
 
-    <profile @closeProfile="closeProfile" v-if="userLoaded" :user="user" > </profile>
+    <profile @updateUser="setAuthenticatedUser" @closeProfile="closeProfile" v-if="userLoaded" :user="user" > </profile>
 
   </q-modal>
 

@@ -1,4 +1,4 @@
-webpackJsonp([0,1,2,3,4,5],{
+webpackJsonp([1,2,3,4,5],{
 
 /***/ 167:
 /***/ (function(module, exports, __webpack_require__) {
@@ -111,30 +111,48 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 175:
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(132)(
-  /* script */
-  __webpack_require__(199),
-  /* template */
-  __webpack_require__(213),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-
-module.exports = Component.exports
-
-
-/***/ }),
-
 /***/ 178:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -166,28 +184,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function () {
     return {
       transaction: {
-        payment_method_id: ''
+        payment_method_id: '',
+        quantity: 1
       },
       payment_methods_select: []
     };
   },
   methods: {
-    paymentMethodsList: function (input) {
-      for (let p in input) {
-        p = input[p];
-        let pMethod = {};
-        pMethod.label = p.description;
-        pMethod.value = p.id;
-        this.payment_methods_select.push(pMethod);
-      }
+    pay: function () {
+      let id = this.id;
+      let api = this.$utils.getApiUrl();
+      let config = {
+        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
+      };
+      let data = {
+        payment_method: this.transaction.payment_method_id,
+        amount: this.transaction.quantity
+      };
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(api + 'users/' + id + '/transactions', data, config).then(response => {
+        this.$emit('updateCoins');
+      });
     }
   },
   mounted() {
-    this.paymentMethodsList(this.paymentMethods);
+    let id = this.id;
+    let api = this.$utils.getApiUrl();
+    let config = {
+      headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
+    };
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(api + 'users/' + id + '/payment_methods', config).then(response => {
+      for (let item in response.data) {
+        item = response.data[item];
+        let obj = {};
+        obj.label = item.description;
+        obj.value = item.id;
+        this.payment_methods_select.push(obj);
+      }
+    });
   },
   props: {
     title: {
@@ -198,7 +236,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       type: Number,
       default: 0
     },
-    paymentMethods: {}
+    id: {}
   }
 });
 
@@ -1167,9 +1205,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "item two-lines"
   }, [_c('i', {
     staticClass: "item-primary"
-  }, [_vm._v("credit_card")]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('div', {
     staticClass: "item-content"
-  }, [_c('label', [_vm._v("Payment Methods")]), _vm._v(" "), _c('q-select', {
+  }, [_c('label', [_vm._v("Payment Type")]), _vm._v(" "), _c('q-select', {
     staticClass: "full-width",
     attrs: {
       "type": "list",
@@ -1182,7 +1220,71 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       expression: "transaction.payment_method_id"
     }
-  })], 1)])])])])])])
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "item two-lines"
+  }, [_c('i', {
+    staticClass: "item-primary"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "item-content"
+  }, [_c('label', [_vm._v("Quantity")]), _vm._v(" "), _c('q-numeric', {
+    attrs: {
+      "min": 1
+    },
+    model: {
+      value: (_vm.transaction.quantity),
+      callback: function($$v) {
+        _vm.transaction.quantity = $$v
+      },
+      expression: "transaction.quantity"
+    }
+  })], 1)])])])]), _vm._v(" "), _c('div', {
+    staticClass: "card-actions"
+  }, [_c('div', {
+    staticClass: "text-primary"
+  }, [_c('button', {
+    staticClass: "secondary",
+    on: {
+      "click": function($event) {
+        _vm.$refs.confirmModal.open()
+      }
+    }
+  }, [_vm._v("Add")])])])]), _vm._v(" "), _c('q-modal', {
+    ref: "confirmModal",
+    attrs: {
+      "content-css": {
+        minWidth: '40vw',
+        minHeight: '20vh'
+      }
+    }
+  }, [_c('q-layout', [_c('div', {
+    staticClass: "toolbar bg-teal",
+    slot: "header"
+  }, [_c('button', {
+    on: {
+      "click": function($event) {
+        _vm.pay()
+      }
+    }
+  }, [_vm._v("Pay")]), _vm._v(" "), _c('q-toolbar-title', {
+    staticClass: "text-center",
+    attrs: {
+      "padding": 1
+    }
+  }, [_vm._v("\n        Confirm Payment\n      ")]), _vm._v(" "), _c('button', {
+    on: {
+      "click": function($event) {
+        _vm.$refs.confirmModal.close()
+      }
+    }
+  }, [_vm._v("Close")])], 1), _vm._v(" "), _c('div', {
+    staticClass: "layout-view"
+  }, [_c('div', {
+    staticClass: "layout-padding"
+  }, [_c('div', {
+    staticClass: "text-center"
+  }, [_vm._v("\n          Please confirm your payment of "), _c('span', {
+    staticClass: "label bg-primary text-white"
+  }, [_vm._v(_vm._s(_vm.transaction.quantity) + " €")]), _vm._v(" with the button on the top of the modal.\n        ")])])])])], 1)], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "width-1of3"
@@ -1368,6 +1470,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -1390,6 +1494,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.getShipmentAddresses(this.user.id);
   },
   methods: {
+    updateUser: function () {
+      this.$emit('updateUser');
+    },
     close: function () {
       this.$emit('closeProfile');
     },
@@ -1478,7 +1585,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('cash-card', {
     attrs: {
       "coins": _vm.user.coins,
-      "paymentMethods": _vm.paymentMethods
+      "paymentMethods": _vm.paymentMethods,
+      "id": _vm.user.id
+    },
+    on: {
+      "updateCoins": _vm.updateUser
     }
   })], 1), _vm._v(" "), _c('div', {
     staticClass: "width-1of2 "
@@ -1493,334 +1604,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })], 1)])])])])
-},staticRenderFns: []}
-
-/***/ }),
-
-/***/ 199:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quasar__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quasar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_quasar__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile_vue__ = __webpack_require__(171);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__profile_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    profile: __WEBPACK_IMPORTED_MODULE_2__profile_vue___default.a
-  },
-  data() {
-    return {
-      user: {},
-      avatarUrl: '',
-      userBids: []
-    };
-  },
-  methods: {
-    closeProfile: function () {
-      this.$refs.userModal.close();
-    },
-    disconnect: function () {
-      this.$auth.destroyToken();
-      location.reload();
-    },
-    setAuthenticatedUser() {
-      let api = this.$utils.getApiUrl();
-      let config = {
-        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
-      };
-
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(api + 'user', config).then(response => {
-        this.$auth.setAuthenticatedUser(response.body);
-        this.user = response.data;
-        this.avatarUrl = this.getAvatar(this.user.email, 200);
-        this.getUserBids();
-      });
-    },
-    getUserBids() {
-      let api = this.$utils.getApiUrl();
-      let config = {
-        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
-      };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(api + 'users/' + this.user.id + '/bids', config).then(response => {
-        for (let bid in response.data) {
-          bid = response.data[bid];
-          this.bidList(bid);
-        }
-      });
-    },
-    notify(msg) {
-      __WEBPACK_IMPORTED_MODULE_1_quasar__["Toast"].create(msg);
-    },
-    getAvatar: function (email, size) {
-      let uri = 'https://api.adorable.io/avatars/' + size + '/' + email + '.png';
-      return uri;
-    },
-    refreshSession: function () {
-      let data = {
-        client_id: 6,
-        client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
-        grant_type: 'refresh_token',
-        refresh_token: localStorage.getItem('refresh')
-      };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('https://auctionserver.ml/oauth/token', data).then(response => {
-        if (this.$utils.debug()) {
-          console.log('Old token: ' + this.$auth.getToken());
-          console.log('New token: ' + response.data.access_token);
-        }
-        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token);
-      });
-    },
-    bidList: function (bid) {
-      this.userBids;
-      let idExists = false;
-      for (let i in this.userBids) {
-        i = this.userBids[i];
-        if (i.id === bid.auction_id) {
-          idExists = true;
-          i.bids.push(bid.coins);
-        }
-      }
-      if (!idExists) {
-        let auction = {};
-        auction.id = bid.auction_id;
-        auction.bids = [];
-        auction.bids.push(bid.coins);
-        this.userBids.push(auction);
-      }
-    }
-  },
-  props: {
-    title: {
-      type: String,
-      default: 'Auctions.io'
-    }
-  },
-  computed: {
-    isAuth() {
-      return this.$auth.isAuthenticated();
-    },
-    userLoaded() {
-      return this.user.id > 0;
-    }
-  },
-  created() {
-    if (this.isAuth) {
-      this.setAuthenticatedUser();
-    }
-  },
-  mounted() {
-    window.setInterval(() => {
-      this.refreshSession();
-    }, 180000);
-  }
-});
-
-/***/ }),
-
-/***/ 213:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('q-layout', {
-    staticClass: "bg-blue-grey-4"
-  }, [_c('div', {
-    staticClass: "toolbar bg-white text-secondary",
-    slot: "header"
-  }, [_c('div', {
-    staticClass: "toolbar-content"
-  }, [_c('button', {
-    staticClass: "hide-on-drawer-visible",
-    on: {
-      "click": function($event) {
-        _vm.$refs.drawer.toggle()
-      }
-    }
-  }, [_c('i', [_vm._v("menu")])]), _vm._v(" "), _c('q-toolbar-title', {
-    attrs: {
-      "padding": 1
-    }
-  }, [_vm._v("\n        " + _vm._s(_vm.title) + "\n      ")])], 1), _vm._v(" "), (_vm.isAuth) ? _c('button', {
-    on: {
-      "click": function($event) {
-        _vm.$refs.userModal.open()
-      }
-    }
-  }, [_vm._v("\n       Welcome " + _vm._s(_vm.user.email) + " "), _c('i', [_vm._v("account_circle")])]) : _vm._e(), _vm._v(" "), (_vm.isAuth) ? _c('button', {
-    on: {
-      "click": function($event) {
-        _vm.disconnect()
-      }
-    }
-  }, [_c('i', [_vm._v("exit_to_app")]), _vm._v(" "), _c('q-tooltip', {
-    attrs: {
-      "anchor": "center right",
-      "offset": [-30, 80]
-    }
-  }, [_c('strong', [_vm._v("Close session")])])], 1) : _vm._e()]), _vm._v(" "), (_vm.userLoaded) ? _c('q-drawer', {
-    ref: "drawer"
-  }, [_c('div', {
-    staticClass: "toolbar bg-teal text-white"
-  }, [_c('q-toolbar-title', [_vm._v("\n        Stats\n      ")])], 1), _vm._v(" "), (_vm.isAuth) ? _c('div', {
-    staticClass: "list platform-delimiter"
-  }, [_c('div', {
-    staticClass: "generic-margin",
-    staticStyle: {
-      "text-align": "center"
-    }
-  }, [_c('img', {
-    staticStyle: {
-      "border-radius": "30%",
-      "height": "100px"
-    },
-    attrs: {
-      "src": _vm.avatarUrl
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "item two-lines"
-  }, [_c('i', {
-    staticClass: "item-primary"
-  }, [_vm._v("monetization_on")]), _vm._v(" "), _c('div', {
-    staticClass: "item-content"
-  }, [_c('input', {
-    staticClass: "full-width text-blue text-bold",
-    attrs: {
-      "type": "number",
-      "readonly": ""
-    },
-    domProps: {
-      "value": _vm.user.coins
-    }
-  })])]), _vm._v(" "), _c('p', {
-    staticClass: "caption text-center"
-  }, [_vm._v("My bids")]), _vm._v(" "), _c('div', {
-    staticClass: "list platform-delimiter"
-  }, _vm._l((_vm.userBids), function(i) {
-    return _c('q-collapsible', {
-      key: "i.id",
-      attrs: {
-        "label": 'Auction: ' + i.id
-      }
-    }, _vm._l((i.bids), function(j) {
-      return _c('div', {
-        staticClass: "item"
-      }, [_c('i', {
-        staticClass: "item-primary"
-      }, [_vm._v("attach_money")]), _vm._v(" "), _c('div', {
-        staticClass: "item-content"
-      }, [_vm._v("\n                " + _vm._s(j) + "\n              ")])])
-    }))
-  }))]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c('q-modal', {
-    ref: "userModal",
-    staticClass: "maximized",
-    attrs: {
-      "content-css": {
-        padding: '10px 40px 5px 40px',
-        minWidth: '50vw'
-      }
-    }
-  }, [(_vm.userLoaded) ? _c('profile', {
-    attrs: {
-      "user": _vm.user
-    },
-    on: {
-      "closeProfile": _vm.closeProfile
-    }
-  }) : _vm._e()], 1), _vm._v(" "), _c('div', {
-    staticClass: "layout-padding generic-margin fit"
-  }, [_c('transition', {
-    attrs: {
-      "name": "fade"
-    }
-  }, [_c('router-view', {
-    staticClass: "layout-view"
-  })], 1)], 1), _vm._v(" "), _c('div', {
-    staticClass: "toolbar bg-teal",
-    slot: "footer"
-  })], 1)
 },staticRenderFns: []}
 
 /***/ })
