@@ -105,6 +105,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url + 'api/users', data, config).then(response => {});
+      this.$auth.destroyToken();
+      location.reload();
     }
   },
   created() {

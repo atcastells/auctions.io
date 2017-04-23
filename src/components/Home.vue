@@ -32,6 +32,9 @@
       </div>
       <div class="row no-margin"> <button class="primary full-width" :disabled="!canBid" @click="bid()"> Bid! </button> </div>
     </q-modal>
+
+
+
   </div>
 </div>
 </template>
@@ -104,6 +107,7 @@ export default {
       }
       axios.post(api + 'auctions/' + this.currentAuction + '/bids', data, config).then((response) => {
         console.log(response.data)
+        location.reload()
       }).catch(function (error) {
         console.log(error)
       })

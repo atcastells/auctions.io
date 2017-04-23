@@ -65,6 +65,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -134,6 +137,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(api + 'auctions/' + this.currentAuction + '/bids', data, config).then(response => {
         console.log(response.data);
+        location.reload();
       }).catch(function (error) {
         console.log(error);
       });

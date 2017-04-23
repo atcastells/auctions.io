@@ -37,7 +37,7 @@
     </div>
     <div class="card-actions">
       <div class="text-primary">
-        <button class="secondary" @click="$refs.confirmModal.open()">Add</button>
+        <button :disabled="validform" class="secondary" @click="$refs.confirmModal.open()">Add</button>
       </div>
     </div>
   </div>
@@ -88,6 +88,7 @@ export default {
       }
       axios.post(api + 'users/' + id + '/transactions', data, config).then((response) => {
         this.$emit('updateCoins')
+        this.$refs.confirmModal.close()
       })
     }
   },
@@ -117,6 +118,11 @@ export default {
       default: 0
     },
     id: {}
+  },
+  computed: {
+    validform: function () {
+      return this.transaction.payment_method_id === ''
+    }
   }
 }
 </script>

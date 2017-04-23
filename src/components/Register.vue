@@ -78,6 +78,8 @@ export default {
       }
       axios.post(url + 'api/users', data, config).then((response) => {
       })
+      this.$auth.destroyToken()
+      location.reload()
     }
   },
   created () {

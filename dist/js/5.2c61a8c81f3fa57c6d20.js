@@ -120,6 +120,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(api + 'users/' + id + '/transactions', data, config).then(response => {
         this.$emit('updateCoins');
+        this.$refs.confirmModal.close();
       });
     }
   },
@@ -149,6 +150,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       default: 0
     },
     id: {}
+  },
+  computed: {
+    validform: function () {
+      return this.transaction.payment_method_id === '';
+    }
   }
 });
 
@@ -241,6 +247,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "text-primary"
   }, [_c('button', {
     staticClass: "secondary",
+    attrs: {
+      "disabled": _vm.validform
+    },
     on: {
       "click": function($event) {
         _vm.$refs.confirmModal.open()
