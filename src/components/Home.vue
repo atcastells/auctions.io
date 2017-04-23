@@ -111,7 +111,7 @@ export default {
   },
   computed: {
     canBid: function () {
-      return this.user.coins > 50
+      return this.user.coins >= 50
     }
   },
   created () {

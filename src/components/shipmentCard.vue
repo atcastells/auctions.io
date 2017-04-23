@@ -9,8 +9,31 @@
       <i>local_shipping</i>
     </div>
     <div class="width-2of3">
-      <div class="list" v-for="i in shipmentAddresses" key="i.id">
-          {{i}}
+      <div class="list">
+          <q-collapsible v-for="i in shipmentAddresses" key="i.id" icon="local_shipping" :label="i.fullname">
+            <label>Country</label>
+            <input class="full-width" readonly v-model="i.country" >
+            <label>City</label>
+            <input class="full-width" readonly v-model="i.city" >
+            <label>Code</label>
+            <input class="full-width" readonly v-model="i.postcode" >
+            <label>Street</label>
+            <input class="full-width" readonly v-model="i.street" >
+            <div class="item two-lines">
+              <i class="item-primary">phone</i>
+              <div class="item-content">
+                <label>Phone</label>
+                <input class="full-width" readonly v-model="i.phone" >
+              </div>
+            </div>
+            <div class="item two-lines">
+              <i class="item-primary">info</i>
+              <div class="item-content">
+                <label>Comment</label>
+                <input class="full-width" readonly v-model="i.comment" >
+              </div>
+            </div>
+          </q-collapsible>
       </div>
     </div>
   </div>
@@ -104,7 +127,7 @@ export default {
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       }
       axios.post(api + 'users/' + this.userId + '/shipment_addresses', this.shipment_address, config).then((response) => {
-        this.$emit('Post shipment address')
+        this.$emit('updateAddresses')
         this.creating = false
       })
     },

@@ -141,7 +141,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   computed: {
     canBid: function () {
-      return this.user.coins > 50;
+      return this.user.coins >= 50;
     }
   },
   created() {

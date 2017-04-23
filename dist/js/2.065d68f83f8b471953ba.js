@@ -108,6 +108,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -136,7 +159,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(api + 'users/' + this.userId + '/shipment_addresses', this.shipment_address, config).then(response => {
-        this.$emit('Post shipment address');
+        this.$emit('updateAddresses');
         this.creating = false;
       });
     },
@@ -213,12 +236,149 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "width-2of3"
+  }, [_c('div', {
+    staticClass: "list"
   }, _vm._l((_vm.shipmentAddresses), function(i) {
-    return _c('div', {
+    return _c('q-collapsible', {
       key: "i.id",
-      staticClass: "list"
-    }, [_vm._v("\n          " + _vm._s(i) + "\n      ")])
-  }))]), _vm._v(" "), (_vm.creating) ? _c('div', {
+      attrs: {
+        "icon": "local_shipping",
+        "label": i.fullname
+      }
+    }, [_c('label', [_vm._v("Country")]), _vm._v(" "), _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (i.country),
+        expression: "i.country"
+      }],
+      staticClass: "full-width",
+      attrs: {
+        "readonly": ""
+      },
+      domProps: {
+        "value": (i.country)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          i.country = $event.target.value
+        }
+      }
+    }), _vm._v(" "), _c('label', [_vm._v("City")]), _vm._v(" "), _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (i.city),
+        expression: "i.city"
+      }],
+      staticClass: "full-width",
+      attrs: {
+        "readonly": ""
+      },
+      domProps: {
+        "value": (i.city)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          i.city = $event.target.value
+        }
+      }
+    }), _vm._v(" "), _c('label', [_vm._v("Code")]), _vm._v(" "), _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (i.postcode),
+        expression: "i.postcode"
+      }],
+      staticClass: "full-width",
+      attrs: {
+        "readonly": ""
+      },
+      domProps: {
+        "value": (i.postcode)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          i.postcode = $event.target.value
+        }
+      }
+    }), _vm._v(" "), _c('label', [_vm._v("Street")]), _vm._v(" "), _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (i.street),
+        expression: "i.street"
+      }],
+      staticClass: "full-width",
+      attrs: {
+        "readonly": ""
+      },
+      domProps: {
+        "value": (i.street)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          i.street = $event.target.value
+        }
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "item two-lines"
+    }, [_c('i', {
+      staticClass: "item-primary"
+    }, [_vm._v("phone")]), _vm._v(" "), _c('div', {
+      staticClass: "item-content"
+    }, [_c('label', [_vm._v("Phone")]), _vm._v(" "), _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (i.phone),
+        expression: "i.phone"
+      }],
+      staticClass: "full-width",
+      attrs: {
+        "readonly": ""
+      },
+      domProps: {
+        "value": (i.phone)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          i.phone = $event.target.value
+        }
+      }
+    })])]), _vm._v(" "), _c('div', {
+      staticClass: "item two-lines"
+    }, [_c('i', {
+      staticClass: "item-primary"
+    }, [_vm._v("info")]), _vm._v(" "), _c('div', {
+      staticClass: "item-content"
+    }, [_c('label', [_vm._v("Comment")]), _vm._v(" "), _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (i.comment),
+        expression: "i.comment"
+      }],
+      staticClass: "full-width",
+      attrs: {
+        "readonly": ""
+      },
+      domProps: {
+        "value": (i.comment)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          i.comment = $event.target.value
+        }
+      }
+    })])])])
+  }))])]), _vm._v(" "), (_vm.creating) ? _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "list full-width"

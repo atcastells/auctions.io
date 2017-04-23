@@ -22,7 +22,7 @@
           <div class="width-1of2 ">
           </div>
           <div class="width-1of2 ">
-            <shipment-card :shipmentAddresses = "shipmentAddresses" :userId="user.id" ></shipment-card>
+            <shipment-card v-on:updateAddresses="getShipmentAddresses(user.id)" :shipmentAddresses = "shipmentAddresses" :userId="user.id" ></shipment-card>
           </div>
         </div>
       </div>
