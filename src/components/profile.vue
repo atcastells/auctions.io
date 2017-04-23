@@ -16,7 +16,7 @@
             <info-card title= "User info" :name="user.name" :email="user.email" :coins="user.coins" iconName="info_outline" background="bg-white"></info-card>
           </div>
           <div class="width-1of2 ">
-            <payment-card :paymentMethods = "paymentMethods" :userId = "this.user.id" >
+            <payment-card v-on:updateMethods="getPaymentMethods(user.id)" :paymentMethods = "paymentMethods" :userId = "this.user.id" >
             </payment-card>
           </div>
           <div class="width-1of2 ">

@@ -216,6 +216,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -239,9 +245,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(api + 'users/' + this.userId + '/payment_methods', this.paymentMethod, config).then(response => {
-        this.$emit('Post paymentMethod');
+        this.$emit('updateMethods');
         this.creating = false;
       });
+    },
+    getPaymentType: function (id) {
+      for (let pt in this.paymentTypes) {
+        pt = this.paymentTypes[pt];
+        if (pt.value === id) return pt.label;
+      }
     }
   },
   computed: {
@@ -848,7 +860,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       key: "i.id",
       staticClass: "list"
-    })
+    }, [_c('div', {
+      staticClass: "item two-lines"
+    }, [_c('i', {
+      staticClass: "item-primary"
+    }, [_vm._v("description")]), _vm._v(" "), _c('div', {
+      staticClass: "item-content"
+    }, [_c('label', [_vm._v(_vm._s(_vm.getPaymentType(i.paymenttype_id)))]), _vm._v(" "), _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (i.description),
+        expression: "i.description"
+      }],
+      staticClass: "full-width",
+      attrs: {
+        "readonly": ""
+      },
+      domProps: {
+        "value": (i.description)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          i.description = $event.target.value
+        }
+      }
+    })])])])
   }))]), _vm._v(" "), (_vm.creating) ? _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -1069,6 +1107,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "paymentMethods": _vm.paymentMethods,
       "userId": this.user.id
+    },
+    on: {
+      "updateMethods": function($event) {
+        _vm.getPaymentMethods(_vm.user.id)
+      }
     }
   })], 1), _vm._v(" "), _c('div', {
     staticClass: "width-1of2 "

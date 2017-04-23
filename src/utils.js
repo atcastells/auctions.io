@@ -1,6 +1,7 @@
 export default function (Vue) {
   const DEBUG = false
   const URL = 'https://auctionserver.ml/'
+  // const URL = 'http://auctionator.local/'
   const API_URL = 'api/'
   Vue.utils = {
     debug: function () {

@@ -10,7 +10,13 @@
     </div>
     <div class="width-2of3">
       <div class="list" v-for="i in paymentMethods" key="i.id">
-
+        <div class="item two-lines">
+          <i class="item-primary">description</i>
+          <div class="item-content">
+            <label>{{getPaymentType(i.paymenttype_id)}}</label>
+            <input class="full-width" readonly v-model="i.description" >
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -70,9 +76,15 @@ export default {
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       }
       axios.post(api + 'users/' + this.userId + '/payment_methods', this.paymentMethod, config).then((response) => {
-        this.$emit('Post paymentMethod')
+        this.$emit('updateMethods')
         this.creating = false
       })
+    },
+    getPaymentType: function (id) {
+      for (let pt in this.paymentTypes) {
+        pt = this.paymentTypes[pt]
+        if (pt.value === id) return pt.label
+      }
     }
   },
   computed: {

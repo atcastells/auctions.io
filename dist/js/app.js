@@ -135,6 +135,7 @@ function load(component) {
 /* harmony default export */ __webpack_exports__["a"] = (function (Vue) {
   const DEBUG = false;
   const URL = 'https://auctionserver.ml/';
+  // const URL = 'http://auctionator.local/'
   const API_URL = 'api/';
   Vue.utils = {
     debug: function () {
