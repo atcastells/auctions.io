@@ -1,17 +1,17 @@
-webpackJsonp([2],{
+webpackJsonp([5],{
 
-/***/ 172:
+/***/ 175:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(187)
+__webpack_require__(202)
 
 var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(181),
+  __webpack_require__(195),
   /* template */
-  __webpack_require__(191),
+  __webpack_require__(206),
   /* scopeId */
   null,
   /* cssModules */
@@ -23,16 +23,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 181:
+/***/ 195:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-//
-//
-//
 //
 //
 //
@@ -70,6 +67,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   methods: {
+    navigateTo: function (nav) {
+      this.$router.push({
+        path: nav
+      });
+    },
     login: function () {
       let data = {
         client_id: 6,
@@ -93,7 +95,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 184:
+/***/ 199:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(165)();
@@ -108,13 +110,13 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 187:
+/***/ 202:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(184);
+var content = __webpack_require__(199);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -122,7 +124,7 @@ var update = __webpack_require__(166)("0a9cec92", content, true);
 
 /***/ }),
 
-/***/ 191:
+/***/ 206:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -134,7 +136,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card shadow-5 bg-white "
   }, [_c('div', {
     staticClass: "card-title bg-secondary text-white"
-  }, [_vm._v("\n          Please Login\n        ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n        Please Login\n      ")]), _vm._v(" "), _c('div', {
     staticClass: "layout-padding"
   }, [_c('div', {
     staticClass: "floating-label"
@@ -187,7 +189,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.login
     }
-  }, [_vm._v("Login")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Login")]), _vm._v(" "), _c('button', {
+    staticClass: "primary push",
+    on: {
+      "click": function($event) {
+        _vm.navigateTo('register')
+      }
+    }
+  }, [_vm._v("Register")])])]), _vm._v(" "), _c('div', {
     staticClass: "width-1of3"
   })])])
 },staticRenderFns: []}

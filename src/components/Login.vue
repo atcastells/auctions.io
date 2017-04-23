@@ -7,7 +7,6 @@
         Please Login
       </div>
       <div class="layout-padding">
-
         <div class="floating-label">
           <input required class="bg-white full-width" v-model="email" type="email">
           <label>Email</label>

@@ -1,4 +1,4 @@
-webpackJsonp([7],{
+webpackJsonp([11],{
 
 /***/ 127:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -100,6 +100,13 @@ function load(component) {
         guest: true
       }
     }, {
+      path: 'register',
+      name: 'register',
+      component: load('Register'),
+      meta: {
+        guest: true
+      }
+    }, {
       path: 'home',
       name: 'home',
       component: load('Home'),
@@ -127,9 +134,17 @@ function load(component) {
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = (function (Vue) {
   const DEBUG = false;
+  const URL = 'https://auctionserver.ml/';
+  const API_URL = 'api/';
   Vue.utils = {
     debug: function () {
       return DEBUG;
+    },
+    getUrl: function () {
+      return URL;
+    },
+    getApiUrl: function () {
+      return URL + API_URL;
     }
   };
   Object.defineProperties(Vue.prototype, {
@@ -212,11 +227,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODU
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_5_utils__["a" /* default */]);
 
 __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */].beforeEach((to, from, next) => {
-  console.log(from);
-  console.log(to);
-  if (to.path === '') {
-    to.path = '/';
-  } else if (to.path === '/') {
+  if (to.path === '/') {
     if (__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].auth.isAuthenticated()) {
       next({
         path: 'home'
@@ -551,28 +562,44 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 var map = {
 	"./Auction.vue": [
-		168,
-		4
+		171,
+		7
 	],
 	"./Error404.vue": [
-		169,
-		3
+		172,
+		6
 	],
 	"./Home.vue": [
-		170,
-		5
+		173,
+		9
 	],
 	"./Index.vue": [
-		171,
+		174,
 		0
 	],
 	"./Login.vue": [
-		172,
-		2
+		175,
+		5
+	],
+	"./Register.vue": [
+		176,
+		8
 	],
 	"./infoCard.vue": [
 		167,
+		4
+	],
+	"./paymentCard.vue": [
+		168,
+		3
+	],
+	"./profile.vue": [
+		170,
 		1
+	],
+	"./shipmentCard.vue": [
+		169,
+		2
 	]
 };
 function webpackAsyncContext(req) {

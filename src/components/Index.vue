@@ -1,179 +1,154 @@
 <template>
-  <q-layout class="bg-grey-14">
-    <div slot="header" class="toolbar bg-white text-secondary">
-      <div class="toolbar-content">
+<q-layout class="bg-blue-grey-4">
+  <div slot="header" class="toolbar bg-white text-secondary">
+    <div class="toolbar-content">
       <button class="hide-on-drawer-visible" @click="$refs.drawer.toggle()">
         <i>menu</i>
       </button>
       <q-toolbar-title :padding="1">
         {{title}}
       </q-toolbar-title>
-      </div>
-      <button v-if="isAuth" @click="$refs.userModal.open()" >
-       Welcome {{email}} <i>account_circle</i>
+    </div>
+    <button v-if="isAuth" @click="$refs.userModal.open()">
+       Welcome {{user.email}} <i>account_circle</i>
       </button>
 
-      <button v-if="isAuth" @click="disconnect()">
+    <button v-if="isAuth" @click="disconnect()">
        <i>exit_to_app</i>
-       <q-tooltip self="bottom bottom" :offset="[-20, 0]">
+       <q-tooltip anchor="center right" :offset="[-30,80]">
          <strong>Close session</strong>
        </q-tooltip>
       </button>
-    </div>
+  </div>
 
-    <!-- <q-tabs v-if="isAuth" slot="navigation">
+  <!-- <q-tabs v-if="isAuth" slot="navigation">
       <q-tab icon="home" route="/home" exact replace></q-tab>
     </q-tabs> -->
 
-    <q-drawer v-if="isAuth" ref="drawer">
-      <div class="toolbar">
-        <q-toolbar-title>
-          Stats
-        </q-toolbar-title>
-      </div>
-
-      <div v-if="isAuth" class="list platform-delimiter">
-        <div style="text-align: center" class="generic-margin">
-          <img style="border-radius: 30%; height: 100px;" :src="avatarUrl"/>
-        </div>
-        <div class="item two-lines">
-          <i class="item-primary">monetization_on</i>
-          <div class="item-content">
-            <input type="number" readonly class="full-width" :value="coins">
-          </div>
-        </div>
-      </div>
-    </q-drawer>
-
-    <q-modal v-if="isAuth" ref="userModal" class="maximized" :content-css="{padding: '10px 40px 5px 40px', minWidth: '50vw'}">
-
-      <q-layout>
-        <div slot="header" class="toolbar bg-white text-secondary">
-          <button @click="$refs.userModal.close()">
-            <i>keyboard_arrow_left</i>
-          </button>
-          <q-toolbar-title :padding="1">
-            {{userName}}'s profile
-          </q-toolbar-title>
-        </div>
-
-        <div class="layout-view  bg-teal">
-          <div class="layout-padding large-gutter">
-            <div class="flex wrap gutter">
-              <div class="width-1of2 ">
-                <info-card
-                :name = "userName"
-                :email = "email"
-                :coins = "coins"
-                iconName = "info_outline"
-                background = "bg-white"
-                ></info-card>
-              </div>
-              <div class="width-1of4 ">
-              </div>
-              <div class="width-1of4 ">
-              </div>
-            </div>
-          </div>
-        </div>
-      </q-layout>
-    </q-modal>
-
-    <div class="layout-padding generic-margin fit">
-      <transition name="fade">
-        <router-view class="layout-view">
-        </router-view>
-      </transition>
+  <q-drawer v-if="userLoaded" ref="drawer">
+    <div class="toolbar bg-teal text-white">
+      <q-toolbar-title>
+        Stats
+      </q-toolbar-title>
     </div>
-    <div slot="footer" class="toolbar"></div>
-  </q-layout>
+
+    <div v-if="isAuth" class="list platform-delimiter">
+      <div style="text-align: center" class="generic-margin">
+        <img style="border-radius: 30%; height: 100px;" :src="avatarUrl" />
+      </div>
+      <div class="item two-lines">
+        <i class="item-primary">monetization_on</i>
+        <div class="item-content">
+          <input type="number" readonly class="full-width text-blue text-bold" :value="user.coins">
+        </div>
+      </div>
+    </div>
+  </q-drawer>
+
+  <q-modal ref="userModal" class="maximized" :content-css="{padding: '10px 40px 5px 40px', minWidth: '50vw'}">
+
+    <profile v-if="userLoaded" :user="user" > </profile>
+
+  </q-modal>
+
+  <div class="layout-padding generic-margin fit">
+    <transition name="fade">
+      <router-view class="layout-view">
+      </router-view>
+    </transition>
+  </div>
+  <div slot="footer" class="toolbar bg-teal"></div>
+</q-layout>
 </template>
 
 
 <script>
-  import axios from 'axios'
-  import { Toast } from 'quasar'
-  import infoCard from './infoCard.vue'
-  export default {
-    components: {
-      infoCard
-    },
-    data () {
-      return {
-        userId: '',
-        userName: '',
-        email: '',
-        coins: '',
-        password: '',
-        avatarUrl: '',
-        userBids: ''
-      }
-    },
-    methods: {
-      disconnect: function () {
-        this.$auth.destroyToken()
-        location.reload()
-      },
-      setAuthenticatedUser () {
-        let api = this.$utils.getApiUrl()
-        let config = {
-          headers: {'Authorization': 'Bearer ' + this.$auth.getToken()}
-        }
-
-        axios.get('https://auctionserver.ml/api/user', config).then((response) => {
-          this.$auth.setAuthenticatedUser(response.body)
-          this.userId = response.data.id
-          this.userName = response.data.name
-          this.coins = response.data.coins
-          this.email = response.data.email
-          this.avatarUrl = this.getAvatar(this.email, 200)
-        })
-        axios.get(api + 'bids', config).then((response) => {
-        })
-      },
-      notify (msg) {
-        Toast.create(msg)
-      },
-      getAvatar: function (email, size) {
-        let uri = 'https://api.adorable.io/avatars/' + size + '/' + email + '.png'
-        return uri
-      },
-      refreshSession: function () {
-        let data = {
-          client_id: 6,
-          client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
-          grant_type: 'refresh_token',
-          refresh_token: localStorage.getItem('refresh')
-        }
-        axios.post('https://auctionserver.ml/oauth/token', data).then((response) => {
-          if (this.$utils.debug()) {
-            console.log('Old token: ' + this.$auth.getToken())
-            console.log('New token: ' + response.data.access_token)
-          }
-          this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token)
-        })
-      }
-    },
-    props: {
-      title: {
-        type: String,
-        default: 'Auctions.io'
-      }
-    },
-    computed: {
-      isAuth () {
-        return this.$auth.isAuthenticated()
-      }
-    },
-    created () {
-      if (this.isAuth) {
-        this.setAuthenticatedUser()
-      }
-    },
-    mounted () {
-      window.setInterval(() => {
-        this.refreshSession()
-      }, 180000)
+import axios from 'axios'
+import { Toast } from 'quasar'
+import profile from './profile.vue'
+export default {
+  components: {
+    profile
+  },
+  data () {
+    return {
+      user: {},
+      avatarUrl: ''
     }
+  },
+  methods: {
+    disconnect: function () {
+      this.$auth.destroyToken()
+      location.reload()
+    },
+    setAuthenticatedUser () {
+      let api = this.$utils.getApiUrl()
+      let config = {
+        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
+      }
+
+      axios.get(api + 'user', config).then((response) => {
+        this.$auth.setAuthenticatedUser(response.body)
+        this.user = response.data
+        this.avatarUrl = this.getAvatar(this.user.email, 200)
+        this.getUserBids()
+      })
+    },
+    getUserBids () {
+      let api = this.$utils.getApiUrl()
+      let config = {
+        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
+      }
+      axios.get(api + 'users/' + this.user.id + '/bids', config).then((response) => {
+        console.log(response.data)
+      })
+    },
+    notify (msg) {
+      Toast.create(msg)
+    },
+    getAvatar: function (email, size) {
+      let uri = 'https://api.adorable.io/avatars/' + size + '/' + email + '.png'
+      return uri
+    },
+    refreshSession: function () {
+      let data = {
+        client_id: 6,
+        client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
+        grant_type: 'refresh_token',
+        refresh_token: localStorage.getItem('refresh')
+      }
+      axios.post('https://auctionserver.ml/oauth/token', data).then((response) => {
+        if (this.$utils.debug()) {
+          console.log('Old token: ' + this.$auth.getToken())
+          console.log('New token: ' + response.data.access_token)
+        }
+        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token)
+      })
+    }
+  },
+  props: {
+    title: {
+      type: String,
+      default: 'Auctions.io'
+    }
+  },
+  computed: {
+    isAuth () {
+      return this.$auth.isAuthenticated()
+    },
+    userLoaded () {
+      return this.user.id > 0
+    }
+  },
+  created () {
+    if (this.isAuth) {
+      this.setAuthenticatedUser()
+    }
+  },
+  mounted () {
+    window.setInterval(() => {
+      this.refreshSession()
+    }, 180000)
   }
+}
 </script>

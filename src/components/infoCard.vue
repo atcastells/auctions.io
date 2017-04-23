@@ -1,6 +1,9 @@
 <template>
   <q-transition name="slide">
   <div class="card text-secondary" :class="background">
+  <div class="card-title">
+    {{title}}
+  </div>
     <div class="card-content ">
       <div class="row">
         <div class="width-1of3">
@@ -11,12 +14,14 @@
             <div class="item two-lines">
               <i v-show="!readOnly" class="item-primary">edit</i>
               <div class="item-content">
+                <label>Name</label>
                 <input class="full-width" :readonly = "readOnly" :value="name">
               </div>
             </div>
             <div class="item two-lines">
               <i v-show="!readOnly" class="item-primary">edit</i>
               <div class="item-content">
+                <label>Email</label>
                  <input class="full-width" :readonly = "readOnly" :value="email">
               </div>
             </div>
@@ -26,7 +31,7 @@
       <div class="card-actions">
         <div class="text-primary">
             <button class="secondary" @click="edit()">Edit Profile</button>
-            <button class="primary" @click="updateUser()">Submit</button>
+            <button v-if="!readOnly" class="primary" @click="updateUser()">Submit</button>
         </div>
       </div>
     </div>
@@ -37,7 +42,7 @@
 <script type="text/javascript">
   import { Toast } from 'quasar'
   export default {
-    props: ['name', 'email', 'coins', 'iconName', 'background', 'apiRoute'],
+    props: ['name', 'email', 'coins', 'iconName', 'background', 'apiRoute', 'title'],
     data: function () {
       return {
         readOnly: true
