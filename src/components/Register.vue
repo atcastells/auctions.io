@@ -48,19 +48,40 @@ export default {
     }
   },
   methods: {
+    login: function () {
+      let data = {
+        client_id: 6,
+        client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
+        grant_type: 'password',
+        username: 'aaroncastells@iesmontsia.org',
+        password: 'aron200289'
+      }
+      axios.post('https://auctionserver.ml/oauth/token', data).then((response) => {
+        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token)
+      })
+    },
     navigateTo: function (nav) {
       this.$router.push({
         path: nav
       })
     },
     register: function () {
+      let data = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.passwordConfirm
+      }
       let url = this.$utils.getUrl()
       let config = {
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       }
-      axios.put(url + 'api/users', this.data, config).then((response) => {
+      axios.post(url + 'api/users', data, config).then((response) => {
       })
     }
+  },
+  created () {
+    this.login()
   },
   computed: {
     passwordMatch: function () {

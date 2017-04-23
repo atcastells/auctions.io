@@ -1,13 +1,13 @@
-webpackJsonp([8],{
+webpackJsonp([9],{
 
-/***/ 176:
+/***/ 177:
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(196),
+  __webpack_require__(201),
   /* template */
-  __webpack_require__(207),
+  __webpack_require__(212),
   /* scopeId */
   null,
   /* cssModules */
@@ -19,7 +19,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 196:
+/***/ 201:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -76,18 +76,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   methods: {
+    login: function () {
+      let data = {
+        client_id: 6,
+        client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
+        grant_type: 'password',
+        username: 'aaroncastells@iesmontsia.org',
+        password: 'aron200289'
+      };
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('https://auctionserver.ml/oauth/token', data).then(response => {
+        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token);
+      });
+    },
     navigateTo: function (nav) {
       this.$router.push({
         path: nav
       });
     },
     register: function () {
+      let data = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.passwordConfirm
+      };
       let url = this.$utils.getUrl();
       let config = {
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put(url + 'api/users', this.data, config).then(response => {});
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url + 'api/users', data, config).then(response => {});
     }
+  },
+  created() {
+    this.login();
   },
   computed: {
     passwordMatch: function () {
@@ -100,7 +121,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 207:
+/***/ 212:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

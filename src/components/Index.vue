@@ -42,12 +42,24 @@
           <input type="number" readonly class="full-width text-blue text-bold" :value="user.coins">
         </div>
       </div>
+      <p class="caption text-center">My bids</p>
+      <div class="list platform-delimiter">
+        <q-collapsible v-for="i in userBids" key="i.id" :label="'Auction: ' + i.id">
+          <div class="item" v-for="j in i.bids">
+            <i class="item-primary">attach_money</i>
+              <div class="item-content">
+                {{j}}
+              </div>
+          </div>
+        </q-collapsible>
+      </div>
+
     </div>
   </q-drawer>
 
   <q-modal ref="userModal" class="maximized" :content-css="{padding: '10px 40px 5px 40px', minWidth: '50vw'}">
 
-    <profile v-if="userLoaded" :user="user" > </profile>
+    <profile @closeProfile="closeProfile" v-if="userLoaded" :user="user" > </profile>
 
   </q-modal>
 
@@ -73,10 +85,14 @@ export default {
   data () {
     return {
       user: {},
-      avatarUrl: ''
+      avatarUrl: '',
+      userBids: []
     }
   },
   methods: {
+    closeProfile: function () {
+      this.$refs.userModal.close()
+    },
     disconnect: function () {
       this.$auth.destroyToken()
       location.reload()
@@ -100,7 +116,10 @@ export default {
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       }
       axios.get(api + 'users/' + this.user.id + '/bids', config).then((response) => {
-        console.log(response.data)
+        for (let bid in response.data) {
+          bid = response.data[bid]
+          this.bidList(bid)
+        }
       })
     },
     notify (msg) {
@@ -124,6 +143,24 @@ export default {
         }
         this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token)
       })
+    },
+    bidList: function (bid) {
+      this.userBids
+      let idExists = false
+      for (let i in this.userBids) {
+        i = this.userBids[i]
+        if (i.id === bid.auction_id) {
+          idExists = true
+          i.bids.push(bid.coins)
+        }
+      }
+      if (!idExists) {
+        let auction = {}
+        auction.id = bid.auction_id
+        auction.bids = []
+        auction.bids.push(bid.coins)
+        this.userBids.push(auction)
+      }
     }
   },
   props: {

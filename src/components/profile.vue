@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <div slot="header" class="toolbar bg-white text-secondary">
-      <button @click="$refs.userModal.close()">
+      <button @click="close()">
           <i>keyboard_arrow_left</i>
         </button>
       <q-toolbar-title :padding="1">
@@ -20,6 +20,10 @@
             </payment-card>
           </div>
           <div class="width-1of2 ">
+            <cash-card
+            :coins="user.coins"
+            :paymentMethods="paymentMethods"
+            ></cash-card>
           </div>
           <div class="width-1of2 ">
             <shipment-card v-on:updateAddresses="getShipmentAddresses(user.id)" :shipmentAddresses = "shipmentAddresses" :userId="user.id" ></shipment-card>
@@ -34,12 +38,14 @@
 import infoCard from './infoCard.vue'
 import paymentCard from './paymentCard.vue'
 import shipmentCard from './shipmentCard.vue'
+import cashCard from './cashCard.vue'
 import axios from 'axios'
 export default {
   components: {
     infoCard,
     paymentCard,
-    shipmentCard
+    shipmentCard,
+    cashCard
   },
   props: {
     user: {}
@@ -52,6 +58,9 @@ export default {
     this.getShipmentAddresses(this.user.id)
   },
   methods: {
+    close: function () {
+      this.$emit('closeProfile')
+    },
     getPaymentMethods: function (id) {
       let api = this.$utils.getApiUrl()
       let config = {

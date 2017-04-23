@@ -119,7 +119,7 @@ export default {
     let config = {
       headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
     }
-    axios.get(api + 'auctions', config).then((response) => {
+    axios.get(api + 'auctions/active', config).then((response) => {
       this.auctions = response.data
     }).catch(function (error) {
       console.log(error)
