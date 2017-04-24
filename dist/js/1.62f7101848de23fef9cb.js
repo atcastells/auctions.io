@@ -752,7 +752,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card text-secondary bg-white"
   }, [_c('div', {
     staticClass: "card-title"
-  }, [_vm._v("\n  " + _vm._s(_vm.title) + " (" + _vm._s(_vm.shipmentAddresses.length) + ")\n")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n  " + _vm._s(_vm.title) + " (" + _vm._s(_vm.shipmentAddresses.length) + ")\r\n")]), _vm._v(" "), _c('div', {
     staticClass: "card-content "
   }, [_c('div', {
     staticClass: "row"
@@ -1310,7 +1310,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card text-secondary bg-white"
   }, [_c('div', {
     staticClass: "card-title"
-  }, [_vm._v("\n  " + _vm._s(_vm.title) + " (" + _vm._s(_vm.paymentMethods.length) + ")\n")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n  " + _vm._s(_vm.title) + " (" + _vm._s(_vm.paymentMethods.length) + ")\r\n")]), _vm._v(" "), _c('div', {
     staticClass: "card-content "
   }, [_c('div', {
     staticClass: "row"

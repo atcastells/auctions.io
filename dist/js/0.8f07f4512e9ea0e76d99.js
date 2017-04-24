@@ -771,7 +771,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card text-secondary bg-white"
   }, [_c('div', {
     staticClass: "card-title"
-  }, [_vm._v("\n  " + _vm._s(_vm.title) + " (" + _vm._s(_vm.shipmentAddresses.length) + ")\n")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n  " + _vm._s(_vm.title) + " (" + _vm._s(_vm.shipmentAddresses.length) + ")\r\n")]), _vm._v(" "), _c('div', {
     staticClass: "card-content "
   }, [_c('div', {
     staticClass: "row"
@@ -1329,7 +1329,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card text-secondary bg-white"
   }, [_c('div', {
     staticClass: "card-title"
-  }, [_vm._v("\n  " + _vm._s(_vm.title) + " (" + _vm._s(_vm.paymentMethods.length) + ")\n")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n  " + _vm._s(_vm.title) + " (" + _vm._s(_vm.paymentMethods.length) + ")\r\n")]), _vm._v(" "), _c('div', {
     staticClass: "card-content "
   }, [_c('div', {
     staticClass: "row"
@@ -1764,7 +1764,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       let config = {
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(api + 'users/' + this.user.id + '/bids', config).then(response => {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(api + 'users/' + this.user.id + '/bids/active', config).then(response => {
         for (let bid in response.data) {
           bid = response.data[bid];
           this.bidList(bid);
@@ -1862,13 +1862,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "padding": 1
     }
-  }, [_vm._v("\n        " + _vm._s(_vm.title) + "\n      ")])], 1), _vm._v(" "), (_vm.isAuth) ? _c('button', {
+  }, [_vm._v("\r\n        " + _vm._s(_vm.title) + "\r\n      ")])], 1), _vm._v(" "), (_vm.isAuth) ? _c('button', {
     on: {
       "click": function($event) {
         _vm.$refs.userModal.open()
       }
     }
-  }, [_vm._v("\n       Welcome " + _vm._s(_vm.user.email) + " "), _c('i', [_vm._v("account_circle")])]) : _vm._e(), _vm._v(" "), (_vm.isAuth) ? _c('button', {
+  }, [_vm._v("\r\n       Welcome " + _vm._s(_vm.user.email) + " "), _c('i', [_vm._v("account_circle")])]) : _vm._e(), _vm._v(" "), (_vm.isAuth) ? _c('button', {
     on: {
       "click": function($event) {
         _vm.disconnect()
@@ -1883,7 +1883,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     ref: "drawer"
   }, [_c('div', {
     staticClass: "toolbar bg-teal text-white"
-  }, [_c('q-toolbar-title', [_vm._v("\n        Stats\n      ")])], 1), _vm._v(" "), (_vm.isAuth) ? _c('div', {
+  }, [_c('q-toolbar-title', [_vm._v("\r\n        Stats\r\n      ")])], 1), _vm._v(" "), (_vm.isAuth) ? _c('div', {
     staticClass: "list platform-delimiter"
   }, [_c('div', {
     staticClass: "generic-margin",
@@ -1930,7 +1930,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         staticClass: "item-primary"
       }, [_vm._v("attach_money")]), _vm._v(" "), _c('div', {
         staticClass: "item-content"
-      }, [_vm._v("\n                " + _vm._s(j) + "\n              ")])])
+      }, [_vm._v("\r\n                " + _vm._s(j) + "\r\n              ")])])
     }))
   }))]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c('q-modal', {
     ref: "userModal",

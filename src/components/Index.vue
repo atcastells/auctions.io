@@ -115,7 +115,7 @@ export default {
       let config = {
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       }
-      axios.get(api + 'users/' + this.user.id + '/bids', config).then((response) => {
+      axios.get(api + 'users/' + this.user.id + '/bids/active', config).then((response) => {
         for (let bid in response.data) {
           bid = response.data[bid]
           this.bidList(bid)

@@ -64,7 +64,8 @@ export default {
       return pad(s / 3.6e6 | 0) + ' : ' + pad((s % 3.6e6) / 6e4 | 0) + ' : ' + pad((s % 6e4) / 1000 | 0) + '' // + '.' + pad(s % 1000, 3)
     },
     calculateTime: function (time, id) {
-      var parsedTime = new Date(Date.parse(time.replace('-', '/', 'g')))
+      var mysqlTime = time.split(/[- :]/)
+      var parsedTime = new Date(Date.UTC(mysqlTime[0], mysqlTime[1] - 1, mysqlTime[2], mysqlTime[3], mysqlTime[4], mysqlTime[5]))
       var pendingTime = parsedTime - this.now
       var idExists = ''
       if (pendingTime >= 0) {
