@@ -1,13 +1,13 @@
-webpackJsonp([10],{
+webpackJsonp([11],{
 
-/***/ 174:
+/***/ 175:
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(198),
+  __webpack_require__(203),
   /* template */
-  __webpack_require__(210),
+  __webpack_require__(215),
   /* scopeId */
   null,
   /* cssModules */
@@ -19,7 +19,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 198:
+/***/ 203:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28,8 +28,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quasar__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quasar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_quasar__);
-//
-//
 //
 //
 //
@@ -138,7 +136,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(api + 'auctions/' + this.currentAuction + '/bids', data, config).then(response => {
         console.log(response.data);
-        location.reload();
       }).catch(function (error) {
         console.log(error);
       });
@@ -179,7 +176,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 210:
+/***/ 215:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

@@ -1,17 +1,13 @@
-webpackJsonp([6],{
+webpackJsonp([10],{
 
-/***/ 176:
+/***/ 178:
 /***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(207)
 
 var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(200),
+  __webpack_require__(206),
   /* template */
-  __webpack_require__(211),
+  __webpack_require__(217),
   /* scopeId */
   null,
   /* cssModules */
@@ -23,7 +19,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 200:
+/***/ 206:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57,37 +53,70 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data() {
     return {
-      email: 'aaroncastells@iesmontsia.org',
-      password: 'aron200289'
+      name: '',
+      email: '',
+      password: '',
+      passwordConfirm: ''
     };
   },
   methods: {
-    navigateTo: function (nav) {
-      this.$router.push({
-        path: nav
-      });
-    },
     login: function () {
       let data = {
         client_id: 6,
         client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
         grant_type: 'password',
-        username: this.email,
-        password: this.password
+        username: 'aaroncastells@iesmontsia.org',
+        password: 'aron200289'
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('https://auctionserver.ml/oauth/token', data).then(response => {
         this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token);
-        location.reload();
       });
     },
-    computed: {
-      isAuth() {
-        return this.$auth.isAuthenticated();
+    navigateTo: function (nav) {
+      this.$auth.destroyToken();
+      this.$router.push({
+        path: nav
+      });
+    },
+    register: function () {
+      let data = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.passwordConfirm
+      };
+      let url = this.$utils.getUrl();
+      let config = {
+        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
+      };
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url + 'api/users', data, config).then(response => {});
+      this.$auth.destroyToken();
+      location.reload();
+    }
+  },
+  created() {
+    this.login();
+  },
+  computed: {
+    passwordMatch: function () {
+      if (!(this.password === this.passwordConfirm)) {
+        return 'has-error';
       }
     }
   }
@@ -95,36 +124,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 204:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(165)();
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 207:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(204);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(166)("0a9cec92", content, true);
-
-/***/ }),
-
-/***/ 211:
+/***/ 217:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -136,9 +136,32 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card shadow-5 bg-white "
   }, [_c('div', {
     staticClass: "card-title bg-secondary text-white"
-  }, [_vm._v("\r\n        Please Login\r\n      ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n        Register\r\n      ")]), _vm._v(" "), _c('div', {
     staticClass: "layout-padding"
   }, [_c('div', {
+    staticClass: "floating-label"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.name),
+      expression: "name"
+    }],
+    staticClass: "bg-white full-width",
+    attrs: {
+      "required": "",
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.name = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('label', [_vm._v("Name")])]), _vm._v(" "), _c('div', {
     staticClass: "floating-label"
   }, [_c('input', {
     directives: [{
@@ -184,19 +207,46 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.password = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('label', [_vm._v("Email")])]), _vm._v(" "), _c('button', {
-    staticClass: "secondary push",
+  }), _vm._v(" "), _c('label', [_vm._v("Password")])]), _vm._v(" "), _c('div', {
+    staticClass: "floating-label"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.passwordConfirm),
+      expression: "passwordConfirm"
+    }],
+    staticClass: "bg-white full-width",
+    class: _vm.passwordMatch,
+    attrs: {
+      "required": "",
+      "type": "password"
+    },
+    domProps: {
+      "value": (_vm.passwordConfirm)
+    },
     on: {
-      "click": _vm.login
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.passwordConfirm = $event.target.value
+      }
     }
-  }, [_vm._v("Login")]), _vm._v(" "), _c('button', {
+  }), _vm._v(" "), _c('label', [_vm._v("Confirm Password")])]), _vm._v(" "), _c('button', {
+    staticClass: "secondary push",
+    attrs: {
+      "disabled": _vm.passwordMatch
+    },
+    on: {
+      "click": _vm.register
+    }
+  }, [_vm._v("Register")]), _vm._v(" "), _c('button', {
     staticClass: "primary push",
     on: {
       "click": function($event) {
-        _vm.navigateTo('register')
+        _vm.navigateTo('login')
       }
     }
-  }, [_vm._v("Register")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Login")])])]), _vm._v(" "), _c('div', {
     staticClass: "width-1of3"
   })])])
 },staticRenderFns: []}

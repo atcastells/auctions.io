@@ -61,6 +61,7 @@ export default {
       })
     },
     navigateTo: function (nav) {
+      this.$auth.destroyToken()
       this.$router.push({
         path: nav
       })

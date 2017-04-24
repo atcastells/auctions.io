@@ -30,6 +30,11 @@
           <div class="width-1of2 ">
             <shipment-card v-on:updateAddresses="getShipmentAddresses(user.id)" :shipmentAddresses = "shipmentAddresses" :userId="user.id" ></shipment-card>
           </div>
+          <div class="width-1of1 ">
+            <finished-auctions
+            :wonAuctions="wonAuctions"
+            ></finished-auctions>
+          </div>
         </div>
       </div>
     </div>
@@ -41,13 +46,15 @@ import infoCard from './infoCard.vue'
 import paymentCard from './paymentCard.vue'
 import shipmentCard from './shipmentCard.vue'
 import cashCard from './cashCard.vue'
+import finishedAuctions from './finishedAuctions'
 import axios from 'axios'
 export default {
   components: {
     infoCard,
     paymentCard,
     shipmentCard,
-    cashCard
+    cashCard,
+    finishedAuctions
   },
   props: {
     user: {}
@@ -58,6 +65,7 @@ export default {
   created () {
     this.getPaymentMethods(this.user.id)
     this.getShipmentAddresses(this.user.id)
+    this.getWonAuctions(this.user.id)
   },
   methods: {
     updateUser: function () {
@@ -83,12 +91,22 @@ export default {
       axios.get(api + 'users/' + id + '/shipment_addresses', config).then((response) => {
         this.shipmentAddresses = response.data
       })
+    },
+    getWonAuctions: function (id) {
+      let api = this.$utils.getApiUrl()
+      let config = {
+        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
+      }
+      axios.get(api + 'users/' + id + '/winnings', config).then((response) => {
+        this.wonAuctions = response.data
+      })
     }
   },
   data () {
     return {
       paymentMethods: '',
-      shipmentAddresses: ''
+      shipmentAddresses: '',
+      wonAuctions: ''
     }
   },
   computed: {

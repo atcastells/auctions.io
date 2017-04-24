@@ -42,7 +42,7 @@
           <input type="number" readonly class="full-width text-blue text-bold" :value="user.coins">
         </div>
       </div>
-      <p class="caption text-center">My bids</p>
+      <p class="caption text-center">My bids (Active Auctions)</p>
       <div class="list platform-delimiter">
         <q-collapsible v-for="i in userBids" key="i.id" :label="'Auction: ' + i.id">
           <div class="item" v-for="j in i.bids">
@@ -53,7 +53,15 @@
           </div>
         </q-collapsible>
       </div>
-
+      <p class="caption text-center">My won Auctions</p>
+      <div class="list platform-delimiter">
+        <div class="item two-lines" v-for="auction in wonAuctions">
+          <i class="item-primary">star</i>
+          <div class="item-content">
+              <span class="label bg-primary text-white">{{auction.id}}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </q-drawer>
 
@@ -86,7 +94,8 @@ export default {
     return {
       user: {},
       avatarUrl: '',
-      userBids: []
+      userBids: [],
+      wonAuctions: ''
     }
   },
   methods: {
@@ -107,7 +116,6 @@ export default {
         this.$auth.setAuthenticatedUser(response.body)
         this.user = response.data
         this.avatarUrl = this.getAvatar(this.user.email, 200)
-        this.getUserBids()
       })
     },
     getUserBids () {
@@ -120,6 +128,15 @@ export default {
           bid = response.data[bid]
           this.bidList(bid)
         }
+      })
+    },
+    getWonAuctions () {
+      let api = this.$utils.getApiUrl()
+      let config = {
+        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
+      }
+      axios.get(api + 'users/' + this.user.id + '/winnings', config).then((response) => {
+        this.wonAuctions = response.data
       })
     },
     notify (msg) {
@@ -145,7 +162,6 @@ export default {
       })
     },
     bidList: function (bid) {
-      this.userBids
       let idExists = false
       for (let i in this.userBids) {
         i = this.userBids[i]
@@ -184,8 +200,18 @@ export default {
   },
   mounted () {
     window.setInterval(() => {
+      for (let auction in this.userBids) {
+        auction = this.userBids[auction]
+        auction.bids = []
+      }
+      this.getWonAuctions()
+      this.getUserBids()
+      this.setAuthenticatedUser()
       this.refreshSession()
-    }, 180000)
+    }, 20000)
+    if (this.userLoaded) {
+      this.getUserBids()
+    }
   }
 }
 </script>

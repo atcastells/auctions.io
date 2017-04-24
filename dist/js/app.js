@@ -1,4 +1,4 @@
-webpackJsonp([12],{
+webpackJsonp([13],{
 
 /***/ 127:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -563,47 +563,51 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 var map = {
 	"./Auction.vue": [
-		172,
-		8
+		173,
+		9
 	],
 	"./Error404.vue": [
-		173,
-		7
+		174,
+		8
 	],
 	"./Home.vue": [
-		174,
-		10
+		175,
+		11
 	],
 	"./Index.vue": [
-		175,
+		176,
 		0
 	],
 	"./Login.vue": [
-		176,
-		6
+		177,
+		7
 	],
 	"./Register.vue": [
-		177,
-		9
+		178,
+		10
 	],
 	"./cashCard.vue": [
 		167,
+		6
+	],
+	"./finishedAuctions.vue": [
+		168,
 		5
 	],
 	"./infoCard.vue": [
-		168,
+		169,
 		4
 	],
 	"./paymentCard.vue": [
-		169,
+		170,
 		3
 	],
 	"./profile.vue": [
-		171,
+		172,
 		1
 	],
 	"./shipmentCard.vue": [
-		170,
+		171,
 		2
 	]
 };

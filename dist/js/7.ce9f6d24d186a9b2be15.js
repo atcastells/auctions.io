@@ -1,13 +1,17 @@
-webpackJsonp([9],{
+webpackJsonp([7],{
 
 /***/ 177:
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(212)
+
 var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(201),
+  __webpack_require__(205),
   /* template */
-  __webpack_require__(212),
+  __webpack_require__(216),
   /* scopeId */
   null,
   /* cssModules */
@@ -19,7 +23,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 201:
+/***/ 205:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53,69 +57,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data() {
     return {
-      name: '',
-      email: '',
-      password: '',
-      passwordConfirm: ''
+      email: 'aaroncastells@iesmontsia.org',
+      password: 'aron200289'
     };
   },
   methods: {
-    login: function () {
-      let data = {
-        client_id: 6,
-        client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
-        grant_type: 'password',
-        username: 'aaroncastells@iesmontsia.org',
-        password: 'aron200289'
-      };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('https://auctionserver.ml/oauth/token', data).then(response => {
-        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token);
-      });
-    },
     navigateTo: function (nav) {
       this.$router.push({
         path: nav
       });
     },
-    register: function () {
+    login: function () {
       let data = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        password_confirmation: this.passwordConfirm
+        client_id: 6,
+        client_secret: 'cZR9DR79MC4miArdU9OC7v9mOwgOTMaCb8DamHax',
+        grant_type: 'password',
+        username: this.email,
+        password: this.password
       };
-      let url = this.$utils.getUrl();
-      let config = {
-        headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
-      };
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url + 'api/users', data, config).then(response => {});
-      this.$auth.destroyToken();
-      location.reload();
-    }
-  },
-  created() {
-    this.login();
-  },
-  computed: {
-    passwordMatch: function () {
-      if (!(this.password === this.passwordConfirm)) {
-        return 'has-error';
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('https://auctionserver.ml/oauth/token', data).then(response => {
+        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token);
+        location.reload();
+      });
+    },
+    computed: {
+      isAuth() {
+        return this.$auth.isAuthenticated();
       }
     }
   }
@@ -123,7 +95,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ 209:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(165)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ 212:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(209);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(166)("0a9cec92", content, true);
+
+/***/ }),
+
+/***/ 216:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -135,32 +136,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card shadow-5 bg-white "
   }, [_c('div', {
     staticClass: "card-title bg-secondary text-white"
-  }, [_vm._v("\r\n        Register\r\n      ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n        Please Login\r\n      ")]), _vm._v(" "), _c('div', {
     staticClass: "layout-padding"
   }, [_c('div', {
-    staticClass: "floating-label"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.name),
-      expression: "name"
-    }],
-    staticClass: "bg-white full-width",
-    attrs: {
-      "required": "",
-      "type": "text"
-    },
-    domProps: {
-      "value": (_vm.name)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.name = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _c('label', [_vm._v("Name")])]), _vm._v(" "), _c('div', {
     staticClass: "floating-label"
   }, [_c('input', {
     directives: [{
@@ -206,46 +184,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.password = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('label', [_vm._v("Password")])]), _vm._v(" "), _c('div', {
-    staticClass: "floating-label"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.passwordConfirm),
-      expression: "passwordConfirm"
-    }],
-    staticClass: "bg-white full-width",
-    class: _vm.passwordMatch,
-    attrs: {
-      "required": "",
-      "type": "password"
-    },
-    domProps: {
-      "value": (_vm.passwordConfirm)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.passwordConfirm = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _c('label', [_vm._v("Confirm Password")])]), _vm._v(" "), _c('button', {
+  }), _vm._v(" "), _c('label', [_vm._v("Email")])]), _vm._v(" "), _c('button', {
     staticClass: "secondary push",
-    attrs: {
-      "disabled": _vm.passwordMatch
-    },
     on: {
-      "click": _vm.register
+      "click": _vm.login
     }
-  }, [_vm._v("Register")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Login")]), _vm._v(" "), _c('button', {
     staticClass: "primary push",
     on: {
       "click": function($event) {
-        _vm.navigateTo('login')
+        _vm.navigateTo('register')
       }
     }
-  }, [_vm._v("Login")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Register")])])]), _vm._v(" "), _c('div', {
     staticClass: "width-1of3"
   })])])
 },staticRenderFns: []}
