@@ -1,13 +1,13 @@
-webpackJsonp([11],{
+webpackJsonp([12],{
 
-/***/ 175:
+/***/ 176:
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(203),
+  __webpack_require__(206),
   /* template */
-  __webpack_require__(215),
+  __webpack_require__(218),
   /* scopeId */
   null,
   /* cssModules */
@@ -19,7 +19,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 203:
+/***/ 206:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84,6 +84,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   methods: {
+    getAuctions: function () {
+      window.setInterval(() => {
+        let api = this.$utils.getApiUrl();
+        let config = {
+          headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
+        };
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(api + 'auctions/active', config).then(response => {
+          this.auctions = response.data;
+        });
+      }, 10000);
+    },
     notify(msg) {
       __WEBPACK_IMPORTED_MODULE_1_quasar__["Toast"].create(msg);
     },
@@ -153,6 +164,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(api + 'auctions/active', config).then(response => {
       this.auctions = response.data;
+      this.getAuctions();
     }).catch(function (error) {
       console.log(error);
     });
@@ -176,7 +188,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 215:
+/***/ 218:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

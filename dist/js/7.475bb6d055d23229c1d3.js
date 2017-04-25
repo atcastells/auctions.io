@@ -1,17 +1,17 @@
 webpackJsonp([7],{
 
-/***/ 177:
+/***/ 178:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(212)
+__webpack_require__(215)
 
 var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(205),
+  __webpack_require__(208),
   /* template */
-  __webpack_require__(216),
+  __webpack_require__(219),
   /* scopeId */
   null,
   /* cssModules */
@@ -23,7 +23,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 205:
+/***/ 208:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62,8 +62,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data() {
     return {
-      email: 'aaroncastells@iesmontsia.org',
-      password: 'aron200289'
+      email: '',
+      password: ''
     };
   },
   methods: {
@@ -95,7 +95,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 209:
+/***/ 212:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(165)();
@@ -110,13 +110,13 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 212:
+/***/ 215:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(209);
+var content = __webpack_require__(212);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -124,7 +124,7 @@ var update = __webpack_require__(166)("0a9cec92", content, true);
 
 /***/ }),
 
-/***/ 216:
+/***/ 219:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -184,19 +184,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.password = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('label', [_vm._v("Email")])]), _vm._v(" "), _c('button', {
+  }), _vm._v(" "), _c('label', [_vm._v("Password")])]), _vm._v(" "), _c('button', {
     staticClass: "secondary push",
     on: {
       "click": _vm.login
     }
-  }, [_vm._v("Login")]), _vm._v(" "), _c('button', {
-    staticClass: "primary push",
-    on: {
-      "click": function($event) {
-        _vm.navigateTo('register')
-      }
-    }
-  }, [_vm._v("Register")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Login")])])]), _vm._v(" "), _c('div', {
     staticClass: "width-1of3"
   })])])
 },staticRenderFns: []}

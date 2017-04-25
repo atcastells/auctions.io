@@ -1,13 +1,13 @@
-webpackJsonp([10],{
+webpackJsonp([11],{
 
-/***/ 178:
+/***/ 179:
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(132)(
   /* script */
-  __webpack_require__(206),
+  __webpack_require__(209),
   /* template */
-  __webpack_require__(217),
+  __webpack_require__(220),
   /* scopeId */
   null,
   /* cssModules */
@@ -19,7 +19,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 206:
+/***/ 209:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -86,6 +86,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('https://auctionserver.ml/oauth/token', data).then(response => {
         this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token);
+        this.register;
       });
     },
     navigateTo: function (nav) {
@@ -106,12 +107,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
       };
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url + 'api/users', data, config).then(response => {});
-      this.$auth.destroyToken();
+      // this.$auth.destroyToken()
       location.reload();
     }
   },
   created() {
-    this.login();
+    // this.login()
   },
   computed: {
     passwordMatch: function () {
@@ -124,7 +125,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 217:
+/***/ 220:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -237,7 +238,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "disabled": _vm.passwordMatch
     },
     on: {
-      "click": _vm.register
+      "click": _vm.login
     }
   }, [_vm._v("Register")]), _vm._v(" "), _c('button', {
     staticClass: "primary push",

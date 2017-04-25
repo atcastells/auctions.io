@@ -1,4 +1,4 @@
-webpackJsonp([13],{
+webpackJsonp([14],{
 
 /***/ 127:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -563,52 +563,56 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 var map = {
 	"./Auction.vue": [
-		173,
+		174,
 		9
 	],
 	"./Error404.vue": [
-		174,
+		175,
 		8
 	],
 	"./Home.vue": [
-		175,
-		11
+		176,
+		12
 	],
 	"./Index.vue": [
-		176,
+		177,
 		0
 	],
 	"./Login.vue": [
-		177,
+		178,
 		7
 	],
 	"./Register.vue": [
-		178,
+		179,
+		11
+	],
+	"./auctionArticles.vue": [
+		167,
 		10
 	],
 	"./cashCard.vue": [
-		167,
+		168,
 		6
 	],
 	"./finishedAuctions.vue": [
-		168,
-		5
+		169,
+		2
 	],
 	"./infoCard.vue": [
-		169,
-		4
+		170,
+		5
 	],
 	"./paymentCard.vue": [
-		170,
-		3
+		171,
+		4
 	],
 	"./profile.vue": [
-		172,
+		173,
 		1
 	],
 	"./shipmentCard.vue": [
-		171,
-		2
+		172,
+		3
 	]
 };
 function webpackAsyncContext(req) {
