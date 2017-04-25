@@ -14,11 +14,11 @@
 
         <div class="floating-label">
           <input required class="bg-white full-width" v-model="password" type="password">
-          <label>Email</label>
+          <label>Password</label>
         </div>
 
         <button class="secondary push" @click="login">Login</button>
-        <button class="primary push" @click="navigateTo('register')">Register</button>
+        <!-- <button class="primary push" @click="navigateTo('register')">Register</button> -->
       </div>
     </div>
     <div class="width-1of3"></div>
@@ -30,8 +30,8 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      email: 'aaroncastells@iesmontsia.org',
-      password: 'aron200289'
+      email: '',
+      password: ''
     }
   },
   methods: {

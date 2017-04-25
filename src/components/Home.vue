@@ -54,6 +54,17 @@ export default {
     }
   },
   methods: {
+    getAuctions: function () {
+      window.setInterval(() => {
+        let api = this.$utils.getApiUrl()
+        let config = {
+          headers: { 'Authorization': 'Bearer ' + this.$auth.getToken() }
+        }
+        axios.get(api + 'auctions/active', config).then((response) => {
+          this.auctions = response.data
+        })
+      }, 10000)
+    },
     notify (msg) {
       Toast.create(msg)
     },
@@ -123,6 +134,7 @@ export default {
     }
     axios.get(api + 'auctions/active', config).then((response) => {
       this.auctions = response.data
+      this.getAuctions()
     }).catch(function (error) {
       console.log(error)
     })

@@ -10,7 +10,7 @@
       </q-toolbar-title>
     </div>
     <button v-if="isAuth" @click="$refs.userModal.open()">
-       Welcome {{user.email}} <i>account_circle</i>
+       Welcome {{user.name}} <i>account_circle</i>
       </button>
 
     <button v-if="isAuth" @click="disconnect()">

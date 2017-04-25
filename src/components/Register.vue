@@ -28,7 +28,7 @@
           <label>Confirm Password</label>
         </div>
 
-        <button :disabled="passwordMatch" class="secondary push" @click="register">Register</button>
+        <button :disabled="passwordMatch" class="secondary push" @click="login">Register</button>
         <button class="primary push" @click="navigateTo('login')">Login</button>
       </div>
     </div>
@@ -58,6 +58,7 @@ export default {
       }
       axios.post('https://auctionserver.ml/oauth/token', data).then((response) => {
         this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now(), response.data.refresh_token)
+        this.register
       })
     },
     navigateTo: function (nav) {
@@ -79,12 +80,12 @@ export default {
       }
       axios.post(url + 'api/users', data, config).then((response) => {
       })
-      this.$auth.destroyToken()
+      // this.$auth.destroyToken()
       location.reload()
     }
   },
   created () {
-    this.login()
+    // this.login()
   },
   computed: {
     passwordMatch: function () {
